@@ -23,7 +23,7 @@
             align-items: center;
         }
         .container {
-            max-width: 900px;
+            max-width: 1000px;
             width: 100%;
             display: flex;
             flex-direction: column;
@@ -47,7 +47,7 @@
             border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             width: 100%;
-            max-width: 700px;
+            max-width: 850px;
             overflow: hidden;
             display: flex;
             flex-direction: column;
@@ -157,6 +157,82 @@
             border-radius: 20px;
             font-size: 0.9rem;
         }
+        
+        /* 名言展示区域样式 */
+        .quote-container {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 25px 0;
+            color: white;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        .quote-icon {
+            font-size: 1.5rem;
+            opacity: 0.7;
+            margin-bottom: 10px;
+        }
+        .quote-text {
+            font-size: 1.1rem;
+            font-style: italic;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+        .quote-author {
+            text-align: right;
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        .refresh-quote {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        .refresh-quote:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(90deg);
+        }
+        
+        /* 建站时间样式 */
+        .site-age-container {
+            background-color: #f8f9fa;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 5px solid #3498db;
+        }
+        .site-age-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #eee;
+        }
+        .site-age-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+        .site-age-label {
+            color: #666;
+        }
+        .site-age-value {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        
         .footer {
             text-align: center;
             padding: 20px;
@@ -235,6 +311,7 @@
             align-items: center;
             gap: 8px;
             font-size: 0.9rem;
+            z-index: 1000;
         }
         .theme-switcher i {
             color: #f39c12;
@@ -271,6 +348,19 @@
         .dark-mode .stat-number {
             color: #4fc3f7;
         }
+        .dark-mode .quote-container {
+            background: linear-gradient(135deg, #3a1c71, #d76d77);
+        }
+        .dark-mode .site-age-container {
+            background-color: #0f3460;
+            border-left-color: #4fc3f7;
+        }
+        .dark-mode .site-age-label {
+            color: #cccccc;
+        }
+        .dark-mode .site-age-value {
+            color: #ffffff;
+        }
     </style>
 </head>
 <body>
@@ -281,13 +371,11 @@
         </div>
         <div class="card">
             <div class="card-header">
-                <!-- 如果没有个人照片，可以显示图标 -->
                 <div class="profile-img">
                     <img src="head.png" alt="头像" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">
                 </div>
                 <h2 class="name">熵</h2>
                 <p class="title">Nektropy</p>
-                <!-- 移除了学校信息 -->
             </div>
             <div class="card-content">
                 <div class="left-section">
@@ -296,7 +384,6 @@
                         <div class="about">
                             <p>我是一名热爱学习的高中生，对计算机科学充满热情。我享受将创意转化为现实的过程，并喜欢解决复杂的问题。</p>
                             <p>我的目标是进入一所优秀的大学，继续学习计算机科学。</p>
-                            <p></p>
                         </div>
                     </div>
                     <div class="section">
@@ -320,6 +407,25 @@
                             <span class="hobby">AI</span>
                         </div>
                     </div>
+                    
+                    <!-- 建站时间模块 -->
+                    <div class="section">
+                        <h3 class="section-title"><i class="fas fa-clock"></i> 网站运行时间</h3>
+                        <div class="site-age-container">
+                            <div class="site-age-item">
+                                <span class="site-age-label">建站时间：</span>
+                                <span class="site-age-value" id="site-start-date">2026-01-24</span>
+                            </div>
+                            <div class="site-age-item">
+                                <span class="site-age-label">已运行：</span>
+                                <span class="site-age-value" id="site-running-time">0 天 0 小时 0 分钟 0 秒</span>
+                            </div>
+                            <div class="site-age-item">
+                                <span class="site-age-label">今天是：</span>
+                                <span class="site-age-value" id="current-date">-</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="right-section">
                     <div class="section">
@@ -332,7 +438,6 @@
                                     psz0410@163.com
                                 </div>
                             </li>
-                            <!-- 移除了电话信息 -->
                             <li>
                                 <i class="fas fa-map-marker-alt"></i>
                                 <div>
@@ -340,7 +445,6 @@
                                     内蒙古
                                 </div>
                             </li>
-                            <!-- 移除了学校信息 -->
                         </ul>
                     </div>
                     <div class="section">
@@ -350,8 +454,29 @@
                             <p>2. 深入学习计算机科学，掌握更多编程语言</p>
                             <p>3. 做一个有趣的独立游戏</p>
                             <p>4. 提高英语水平</p>
-                            <p></p>
                         </div>
+                    </div>
+                    
+                    <!-- 随机名言模块 -->
+                    <div class="section">
+                        <h3 class="section-title"><i class="fas fa-quote-left"></i> 今日名言</h3>
+                        <div class="quote-container">
+                            <button class="refresh-quote" id="refresh-quote" title="刷新名言">
+                                <i class="fas fa-redo"></i>
+                            </button>
+                            <div class="quote-icon">
+                                <i class="fas fa-quote-left"></i>
+                            </div>
+                            <div class="quote-text" id="quote-text">
+                                <!-- 名言内容将由JavaScript动态填充 -->
+                            </div>
+                            <div class="quote-author" id="quote-author">
+                                <!-- 名言作者将由JavaScript动态填充 -->
+                            </div>
+                        </div>
+                        <p style="text-align: center; margin-top: 10px; font-size: 0.9rem; color: #777;">
+                            点击右上角刷新按钮获取新的名言
+                        </p>
                     </div>
                 </div>
             </div>
@@ -368,7 +493,6 @@
                 
                 <div class="social-links">
                     <a href="https://github.com/Nektropy" title="GitHub"><i class="fab fa-github"></i></a>
-                    <!-- 移除了微信和微博链接 -->
                     <a href="https://qm.qq.com/cgi-bin/qm/qr?k=3977278530" title="QQ"><i class="fab fa-qq"></i></a>
                     <a href="mailto:psz0410@163.com" title="邮箱"><i class="fas fa-envelope"></i></a>
                 </div>
@@ -422,36 +546,176 @@
                     }, 150);
                 });
             });
+        });
+        
+        // 建站时间计算功能
+        const siteCreationDate = new Date('2026-01-24T00:00:00'); // 你的建站时间
+        
+        function updateSiteRunningTime() {
+            const now = new Date();
+            const diff = now - siteCreationDate;
+            
+            // 计算天、小时、分钟、秒
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+            
+            // 格式化日期显示
+            const formatDate = (date) => {
+                return date.getFullYear() + '-' + 
+                       (date.getMonth() + 1).toString().padStart(2, '0') + '-' + 
+                       date.getDate().toString().padStart(2, '0');
+            };
+            
+            // 更新显示
+            document.getElementById('site-running-time').textContent = 
+                `${days} 天 ${hours} 小时 ${minutes} 分钟 ${seconds} 秒`;
+            document.getElementById('current-date').textContent = formatDate(now);
+        }
+        
+        // 随机名言功能
+        const quotes = [
+            {
+                text: "代码如诗，逻辑如画。每一行代码都是对世界的理解，每一次调试都是对真理的探索。",
+                author: "—— 计算机科学"
+            },
+            {
+                text: "学习编程不是记住所有语法，而是学会如何思考。问题从来不是问题，而是挑战的开始。",
+                author: "—— 编程哲学"
+            },
+            {
+                text: "成功不是终点，失败不是终结。重要的是继续前进的勇气。",
+                author: "—— 温斯顿·丘吉尔"
+            },
+            {
+                text: "编程是21世纪的超级能力，它让你能够创造任何你想象到的东西。",
+                author: "—— 科技梦想家"
+            },
+            {
+                text: "数学是科学的语言，编程是数学的实践。两者结合，能创造无限可能。",
+                author: "—— 数学与计算机"
+            },
+            {
+                text: "永远不要停止学习，因为生活永远不会停止教学。",
+                author: "—— 学习格言"
+            },
+            {
+                text: "游戏不仅是娱乐，它是艺术、科学和故事的完美结合。",
+                author: "—— 游戏设计师"
+            },
+            {
+                text: "在代码的世界里，每一个bug都是一个学习的机会。",
+                author: "—— 开发者"
+            },
+            {
+                text: "未来属于那些相信梦想之美的人。",
+                author: "—— 埃莉诺·罗斯福"
+            },
+            {
+                text: "技术本身不是目的，而是实现人类梦想的工具。",
+                author: "—— 科技人文"
+            },
+            {
+                text: "人工智能不是要取代人类，而是要增强人类的能力。",
+                author: "—— AI哲学"
+            },
+            {
+                text: "音乐是时间的艺术，编程是逻辑的艺术，两者都是创造的过程。",
+                author: "—— 创造力"
+            },
+            {
+                text: "每一次失败都是向成功迈进的一步，只要你不放弃。",
+                author: "—— 成功学"
+            },
+            {
+                text: "好奇心是学习的第一动力，保持好奇，保持学习。",
+                author: "—— 爱因斯坦"
+            },
+            {
+                text: "高中不是终点，而是通往更广阔世界的起点。",
+                author: "—— 学生时代"
+            }
+        ];
+        
+        let lastQuoteIndex = -1;
+        
+        function getRandomQuote() {
+            let randomIndex;
+            // 避免连续出现相同的名言
+            do {
+                randomIndex = Math.floor(Math.random() * quotes.length);
+            } while (randomIndex === lastQuoteIndex && quotes.length > 1);
+            
+            lastQuoteIndex = randomIndex;
+            return quotes[randomIndex];
+        }
+        
+        function displayRandomQuote() {
+            const quote = getRandomQuote();
+            document.getElementById('quote-text').textContent = quote.text;
+            document.getElementById('quote-author').textContent = quote.author;
+            
+            // 添加刷新动画
+            const quoteContainer = document.querySelector('.quote-container');
+            quoteContainer.style.opacity = '0.7';
+            setTimeout(() => {
+                quoteContainer.style.transition = 'opacity 0.3s ease';
+                quoteContainer.style.opacity = '1';
+            }, 10);
+        }
+        
+        // 初始化函数
+        function initPage() {
+            // 显示初始名言
+            displayRandomQuote();
+            
+            // 更新建站时间
+            updateSiteRunningTime();
+            
+            // 每秒更新建站时间
+            setInterval(updateSiteRunningTime, 1000);
+            
+            // 绑定名言刷新按钮事件
+            document.getElementById('refresh-quote').addEventListener('click', function() {
+                // 添加按钮旋转动画
+                this.style.transform = 'rotate(180deg)';
+                setTimeout(() => {
+                    this.style.transform = 'rotate(0deg)';
+                }, 300);
+                
+                // 显示新名言
+                displayRandomQuote();
+            });
             
             // 确保不蒜子统计正确显示
             window.onload = function() {
-                // 检查不蒜子统计是否加载成功
                 setTimeout(() => {
                     const pv = document.getElementById('busuanzi_value_site_pv');
                     const uv = document.getElementById('busuanzi_value_site_uv');
                     
                     if (pv && pv.textContent === '0') {
-                        // 如果不蒜子统计没有加载成功，显示本地存储的计数
                         const localVisits = localStorage.getItem('nektropy_visit_count') || 0;
                         const localVisitors = localStorage.getItem('nektropy_visitor_count') || 1;
                         
                         pv.textContent = localVisits;
                         uv.textContent = localVisitors;
                         
-                        // 增加访问计数
                         const newVisits = parseInt(localVisits) + 1;
                         localStorage.setItem('nektropy_visit_count', newVisits);
                         
-                        // 如果是新访客，增加访客数
                         if (!localStorage.getItem('has_visited_nektropy')) {
                             const newVisitors = parseInt(localVisitors) + 1;
                             localStorage.setItem('nektropy_visitor_count', newVisitors);
                             localStorage.setItem('has_visited_nektropy', 'true');
                         }
                     }
-                }, 3000); // 等待3秒让不蒜子统计加载
+                }, 3000);
             };
-        });
+        }
+        
+        // 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', initPage);
     </script>
 </body>
 </html>
