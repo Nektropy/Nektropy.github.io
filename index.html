@@ -416,7 +416,7 @@
                         <div class="site-age-container">
                             <div class="site-age-item">
                                 <span class="site-age-label">建站时间：</span>
-                                <span class="site-age-value" id="site-start-date">2026-01-24</span>
+                                <span class="site-age-value" id="site-start-date">2026-01-23</span>
                             </div>
                             <div class="site-age-item">
                                 <span class="site-age-label">已运行：</span>
@@ -525,7 +525,7 @@
         });
         
         // 建站时间计算功能
-        const siteCreationDate = new Date('2026-01-24T00:00:00');
+        const siteCreationDate = new Date('2026-01-23T20:45:00');
         
         function updateSiteRunningTime() {
             const now = new Date();
@@ -568,7 +568,7 @@
                 } else if (data.from) {
                     document.getElementById('quote-author').textContent = `—— ${data.from}`;
                 } else {
-                    document.getElementById('quote-author').textContent = '—— 一言';
+                    document.getElementById('quote-author').textContent = '—— 佚名';
                 }
                 
                 return data;
