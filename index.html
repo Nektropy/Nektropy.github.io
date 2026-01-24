@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>个人名片 - 移动端优化</title>
+    <title>熵的个人网站</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -687,7 +687,7 @@
     <div class="container">
         <div class="header">
             <h1>个人名片</h1>
-            <p>移动端优化版本</p>
+            <p>新增AI聊天功能</p>
         </div>
         <div class="card">
             <div class="card-header">
@@ -821,8 +821,8 @@
         <!-- Gemini 2.5 Flash 聊天卡片 -->
         <div class="card" style="margin-top: 30px;">
             <div class="card-header">
-                <h2 class="name">熵</h2>
-                <p class="title">AI 助手 (Gemini 2.5 Flash)</p>
+                <h2 class="name">熵bot</h2>
+                <p class="title">AI聊天区</p>
             </div>
             <div class="chat-container">
                 <!-- 聊天消息区域 -->
@@ -1003,7 +1003,7 @@
         // Gemini 2.5 Flash 聊天功能
         class GeminiChat {
             constructor() {
-                this.apiKey = "YOUR_GEMINI_API_KEY_HERE"; // 请替换为你的实际API密钥
+                this.apiKey = "AIzaSyBDkgrXEfZGAkzNdyy-tVljzvYIquNuOKg"; // 请替换为你的实际API密钥
                 this.apiUrl = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent";
                 this.maxLength = 500;
                 this.conversationHistory = [];
@@ -1151,7 +1151,7 @@
                 const errorDiv = document.createElement('div');
                 errorDiv.className = 'message bot-message';
                 errorDiv.innerHTML = `
-                    <div class="message-avatar">熵</div>
+                    <div class="message-avatar">熵bot</div>
                     <div class="message-content" style="color: #e74c3c;">
                         ${message}
                     </div>
