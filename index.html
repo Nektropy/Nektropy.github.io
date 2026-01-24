@@ -188,6 +188,24 @@
             color: white;
             transform: translateY(-3px);
         }
+        
+        /* 访问统计样式 */
+        .visit-stats {
+            margin: 15px 0;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            display: inline-block;
+        }
+        .visit-stats span {
+            display: inline-block;
+            margin: 0 5px;
+        }
+        .stat-number {
+            font-weight: bold;
+            color: #3498db;
+        }
+        
         @media (max-width: 768px) {
             .card-content {
                 flex-direction: column;
@@ -202,6 +220,7 @@
                 font-size: 2rem;
             }
         }
+        
         /* 自定义颜色切换按钮 */
         .theme-switcher {
             position: fixed;
@@ -244,6 +263,13 @@
         .dark-mode .social-links a {
             background-color: #0f3460;
             color: #e6e6e6;
+        }
+        .dark-mode .visit-stats {
+            background-color: #0f3460;
+            color: #b8b8b8;
+        }
+        .dark-mode .stat-number {
+            color: #4fc3f7;
         }
     </style>
 </head>
@@ -331,6 +357,15 @@
             </div>
             <div class="footer">
                 <p>感谢访问我的个人名片网站！欢迎与我联系交流</p>
+                
+                <!-- 访问统计显示区域 -->
+                <div class="visit-stats">
+                    <span id="busuanzi_container_site_pv">
+                        本站总访问量 <span id="busuanzi_value_site_pv" class="stat-number">0</span> 次 | 
+                        访客数 <span id="busuanzi_value_site_uv" class="stat-number">0</span> 人
+                    </span>
+                </div>
+                
                 <div class="social-links">
                     <a href="https://github.com/Nektropy" title="GitHub"><i class="fab fa-github"></i></a>
                     <!-- 移除了微信和微博链接 -->
@@ -341,11 +376,16 @@
             </div>
         </div>
     </div>
+    
     <!-- 主题切换按钮 -->
     <div class="theme-switcher" id="themeSwitcher">
         <i class="fas fa-moon"></i>
         <span>暗色模式</span>
     </div>
+    
+    <!-- 不蒜子统计脚本 -->
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
     <script>
         // 主题切换功能
         document.getElementById('themeSwitcher').addEventListener('click', function() {
@@ -360,6 +400,7 @@
                 text.textContent = '暗色模式';
             }
         });
+        
         // 简单动画效果 - 卡片加载时淡入
         document.addEventListener('DOMContentLoaded', function() {
             const card = document.querySelector('.card');
@@ -370,6 +411,7 @@
                 card.style.opacity = '1';
                 card.style.transform = 'translateY(0)';
             }, 100);
+            
             // 为技能和兴趣标签添加点击效果
             const tags = document.querySelectorAll('.skill, .hobby');
             tags.forEach(tag => {
@@ -380,6 +422,35 @@
                     }, 150);
                 });
             });
+            
+            // 确保不蒜子统计正确显示
+            window.onload = function() {
+                // 检查不蒜子统计是否加载成功
+                setTimeout(() => {
+                    const pv = document.getElementById('busuanzi_value_site_pv');
+                    const uv = document.getElementById('busuanzi_value_site_uv');
+                    
+                    if (pv && pv.textContent === '0') {
+                        // 如果不蒜子统计没有加载成功，显示本地存储的计数
+                        const localVisits = localStorage.getItem('nektropy_visit_count') || 0;
+                        const localVisitors = localStorage.getItem('nektropy_visitor_count') || 1;
+                        
+                        pv.textContent = localVisits;
+                        uv.textContent = localVisitors;
+                        
+                        // 增加访问计数
+                        const newVisits = parseInt(localVisits) + 1;
+                        localStorage.setItem('nektropy_visit_count', newVisits);
+                        
+                        // 如果是新访客，增加访客数
+                        if (!localStorage.getItem('has_visited_nektropy')) {
+                            const newVisitors = parseInt(localVisitors) + 1;
+                            localStorage.setItem('nektropy_visitor_count', newVisitors);
+                            localStorage.setItem('has_visited_nektropy', 'true');
+                        }
+                    }
+                }, 3000); // 等待3秒让不蒜子统计加载
+            };
         });
     </script>
 </body>
