@@ -3,329 +3,710 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>熵 (Nektropy) - 个人主页</title>
+    <title>个人名片</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-    <!-- Markdown 解析与高亮库 -->
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
-    
     <style>
-        :root {
-            --bg-color: #0f0f11;
-            --card-bg: rgba(28, 28, 30, 0.6);
-            --card-border: rgba(255, 255, 255, 0.08);
-            --text-main: #ffffff;
-            --text-sub: #a1a1aa;
-            --accent: #6366f1;
-            --accent-glow: rgba(99, 102, 241, 0.4);
-            --font-main: 'Inter', sans-serif;
-            --font-mono: 'JetBrains Mono', monospace;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
         }
-
-        body.light-mode {
-            --bg-color: #f0f2f5;
-            --card-bg: rgba(255, 255, 255, 0.8);
-            --card-border: rgba(0, 0, 0, 0.05);
-            --text-main: #1e1b4b;
-            --text-sub: #475569;
-            --accent: #4f46e5;
-            --accent-glow: rgba(79, 70, 229, 0.2);
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; transition: all 0.3s ease; }
-
         body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            font-family: var(--font-main);
+            background-color: #f7f9fc;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
             min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            max-width: 1000px;
+            width: 100%;
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 20px;
-            overflow-x: hidden;
-            background-image: radial-gradient(circle at 10% 20%, rgba(99, 102, 241, 0.1) 0%, transparent 40%),
-                              radial-gradient(circle at 90% 80%, rgba(236, 72, 153, 0.1) 0%, transparent 40%);
-            background-attachment: fixed;
         }
-
-        .container { width: 100%; max-width: 1000px; margin-top: 40px; }
-
-        .bento-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
         }
-
+        .header h1 {
+            font-size: 2.5rem;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        .header p {
+            color: #7f8c8d;
+            font-size: 1.1rem;
+        }
         .card {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 28px;
-            padding: 24px;
-            backdrop-filter: blur(20px);
-            position: relative;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 850px;
             overflow: hidden;
             display: flex;
             flex-direction: column;
         }
-
-        .card:hover { transform: translateY(-5px); border-color: var(--accent); box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
-
-        /* 个人信息 */
-        .profile-card { grid-column: span 2; grid-row: span 2; align-items: center; text-align: center; justify-content: center; }
-        .avatar { width: 120px; height: 120px; border-radius: 50%; border: 4px solid var(--accent); margin-bottom: 20px; box-shadow: 0 0 20px var(--accent-glow); }
-        .name { font-size: 2.5rem; font-weight: 800; }
-        .username { font-family: var(--font-mono); font-size: 1rem; color: var(--accent); opacity: 0.8; }
-        
-        /* 动态流动计时器 */
-        .stats-card { grid-column: span 2; padding: 28px; justify-content: center; }
-        .running-time { font-family: var(--font-mono); font-size: 1.5rem; color: var(--accent); font-weight: 700; display: block; margin-top: 10px; }
-
-        /* 一言卡片 */
-        .quote-card { grid-column: span 2; cursor: pointer; justify-content: center; padding: 28px; background: rgba(255,255,255,0.03); }
-        .quote-content { font-size: 1.1rem; line-height: 1.6; font-weight: 500; color: var(--text-main); }
-        .quote-author { font-size: 0.85rem; color: var(--text-sub); margin-top: 15px; text-align: right; opacity: 0.7; }
-
-        /* 天气卡片 */
-        .weather-card { grid-column: span 1; background: linear-gradient(135deg, #1e3a8a, #1e40af); color: white; border: none; }
-        .weather-info { font-size: 2rem; font-weight: 700; margin: 10px 0; }
-
-        /* 技能栈 */
-        .skills-card { grid-column: span 1; justify-content: space-between; }
-        .tech-icons { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-top: 10px; }
-        .tech-icons div { display: flex; flex-direction: column; align-items: center; gap: 5px; }
-        .tech-icons i { font-size: 2.2rem; color: var(--text-sub); }
-        .tech-icons span { font-size: 0.7rem; color: var(--text-sub); font-weight: 600; }
-
-        /* 熵 Beta AI - Markdown 增强版 */
-        .ai-card { grid-column: span 2; background: rgba(99, 102, 241, 0.05); border: 1px dashed var(--accent); max-height: 400px; }
-        #ai-response { 
-            font-size: 0.9rem; 
-            color: var(--text-main); 
-            margin-top: 12px; 
-            overflow-y: auto; 
+        .card-header {
+            background: linear-gradient(135deg, #3498db, #8e44ad);
+            color: white;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 5px solid rgba(255, 255, 255, 0.3);
+            object-fit: cover;
+            margin-bottom: 20px;
+            background-color: #ecf0f1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3.5rem;
+            color: #3498db;
+        }
+        .name {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        .title {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 15px;
+        }
+        .card-content {
+            display: flex;
+            flex-wrap: wrap;
+            padding: 0;
+        }
+        .left-section, .right-section {
+            padding: 30px;
             flex: 1;
-            padding-right: 5px;
+            min-width: 300px;
+        }
+        .section-title {
+            font-size: 1.3rem;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f1f1f1;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .section-title i {
+            color: #3498db;
+        }
+        .about p {
+            margin-bottom: 15px;
+            color: #555;
+        }
+        .contact-list {
+            list-style-type: none;
+        }
+        .contact-list li {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .contact-list i {
+            width: 35px;
+            height: 35px;
+            background-color: #f1f8ff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #3498db;
+        }
+        .skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .skill {
+            background-color: #f1f8ff;
+            color: #3498db;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+        .hobbies {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .hobby {
+            background-color: #f8f9fa;
+            color: #555;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        /* 名言展示区域样式 */
+        .quote-container {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 25px 0;
+            color: white;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        .quote-icon {
+            font-size: 1.5rem;
+            opacity: 0.7;
+            margin-bottom: 10px;
+        }
+        .quote-text {
+            font-size: 1.1rem;
+            font-style: italic;
             line-height: 1.6;
+            margin-bottom: 10px;
+            min-height: 60px;
         }
-        /* Markdown 样式修补 */
-        #ai-response code { font-family: var(--font-mono); background: rgba(255,255,255,0.1); padding: 2px 4px; border-radius: 4px; }
-        #ai-response pre { background: #1a1a1c; padding: 12px; border-radius: 12px; margin: 10px 0; overflow-x: auto; }
-        #ai-response pre code { background: none; padding: 0; }
-        #ai-response p { margin-bottom: 8px; }
-        #ai-response ul, #ai-response ol { margin-left: 20px; margin-bottom: 8px; }
-        #ai-response table { border-collapse: collapse; width: 100%; margin: 10px 0; font-size: 0.8rem; }
-        #ai-response th, #ai-response td { border: 1px solid var(--card-border); padding: 6px; text-align: left; }
-
-        .ai-input-area { display: flex; gap: 10px; margin-top: 15px; }
-        .ai-input { flex: 1; background: rgba(0,0,0,0.2); border: 1px solid var(--card-border); border-radius: 14px; padding: 10px 15px; color: white; outline: none; }
-        .ai-btn { background: var(--accent); border: none; color: white; padding: 10px 20px; border-radius: 14px; cursor: pointer; }
-
-        /* 目标清单 */
-        .goals-card { grid-column: span 4; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; padding: 35px; }
-        .goal-item { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 12px; padding: 25px; border-radius: 20px; background: rgba(255,255,255,0.02); }
-        .goal-item i { font-size: 2.2rem; color: var(--accent); }
-        .goal-title { font-weight: 700; font-size: 1.2rem; }
-
-        /* 底部 */
-        .footer { margin-top: 60px; text-align: center; width: 100%; padding-bottom: 50px; }
-        .social-row { display: flex; justify-content: center; gap: 25px; margin-bottom: 25px; }
-        .social-circle {
-            width: 55px; height: 55px; border-radius: 50%; background: var(--card-bg); 
-            border: 1px solid var(--card-border); display: flex; align-items: center; 
-            justify-content: center; font-size: 1.4rem; color: var(--text-main); text-decoration: none;
+        .quote-author {
+            text-align: right;
+            font-size: 0.9rem;
+            opacity: 0.9;
         }
-        .social-circle:hover { background: var(--accent); color: white; transform: translateY(-3px) scale(1.05); }
+        .refresh-quote {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+        .refresh-quote:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(90deg);
+        }
 
-        .theme-toggle { position: fixed; top: 25px; right: 25px; cursor: pointer; font-size: 1.6rem; color: var(--text-sub); z-index: 100; padding: 10px; }
+        /* 建站时间样式 */
+        .site-age-container {
+            background-color: #f8f9fa;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 5px solid #3498db;
+        }
+        .site-age-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #eee;
+        }
+        .site-age-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+        .site-age-label {
+            color: #666;
+        }
+        .site-age-value {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #f8f9fa;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            border-top: 1px solid #eee;
+        }
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: #f1f8ff;
+            border-radius: 50%;
+            color: #3498db;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        .social-links a:hover {
+            background-color: #3498db;
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        /* 访问统计样式 */
+        .visit-stats {
+            margin: 15px 0;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            display: inline-block;
+        }
+        .visit-stats span {
+            display: inline-block;
+            margin: 0 5px;
+        }
+        .stat-number {
+            font-weight: bold;
+            color: #3498db;
+        }
 
         @media (max-width: 768px) {
-            .bento-grid { grid-template-columns: repeat(2, 1fr); }
-            .profile-card, .stats-card, .quote-card, .ai-card, .goals-card { grid-column: span 2; }
-            .goals-card { grid-template-columns: 1fr; }
+            .card-content {
+                flex-direction: column;
+            }
+            .card-header {
+                padding: 20px;
+            }
+            .name {
+                font-size: 1.8rem;
+            }
+            .header h1 {
+                font-size: 2rem;
+            }
+        }
+
+        /* 自定义颜色切换按钮 */
+        .theme-switcher {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            z-index: 1000;
+        }
+        .theme-switcher i {
+            color: #f39c12;
+        }
+        .dark-mode {
+            background-color: #1a1a2e;
+            color: #e6e6e6;
+        }
+        .dark-mode .card {
+            background-color: #16213e;
+            color: #e6e6e6;
+        }
+        .dark-mode .section-title {
+            color: #e6e6e6;
+        }
+        .dark-mode .footer {
+            background-color: #0f3460;
+            color: #b8b8b8;
+        }
+        .dark-mode .about p, .dark-mode .hobby {
+            color: #cccccc;
+        }
+        .dark-mode .skill, .dark-mode .hobby {
+            background-color: #0f3460;
+        }
+        .dark-mode .social-links a {
+            background-color: #0f3460;
+            color: #e6e6e6;
+        }
+        .dark-mode .visit-stats {
+            background-color: #0f3460;
+            color: #b8b8b8;
+        }
+        .dark-mode .stat-number {
+            color: #4fc3f7;
+        }
+        .dark-mode .quote-container {
+            background: linear-gradient(135deg, #3a1c71, #d76d77);
+        }
+        .dark-mode .site-age-container {
+            background-color: #0f3460;
+            border-left-color: #4fc3f7;
+        }
+        .dark-mode .site-age-label {
+            color: #cccccc;
+        }
+        .dark-mode .site-age-value {
+            color: #ffffff;
         }
     </style>
 </head>
 <body>
-
-    <div class="theme-toggle" id="themeBtn"><i class="fas fa-moon"></i></div>
-
     <div class="container">
-        <div class="bento-grid">
-            
-            <div class="card profile-card">
-                <img src="https://api.dicebear.com/7.x/notionists/svg?seed=Nektropy" alt="Avatar" class="avatar">
-                <div class="name-wrap">
-                    <h1 class="name">熵</h1>
-                    <span class="username">@Nektropy</span>
-                </div>
-                <p style="color:var(--text-sub); font-size: 1rem; font-weight: 500;">高中生开发者 | 探索数学与游戏开发</p>
-            </div>
-
-            <div class="card stats-card">
-                <span style="font-size: 0.85rem; color: var(--text-sub); font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">网站运行时间 | SYSTEM RUNTIME</span>
-                <div id="runtime" class="running-time">00d 00h 00m 00s 000ms</div>
-                <div style="margin-top: 20px; display: flex; gap: 25px;">
-                    <div><span id="busuanzi_value_site_pv" style="font-weight:700; font-size: 1.1rem;">...</span> <small style="color:var(--text-sub)">Views</small></div>
-                    <div><span id="busuanzi_value_site_uv" style="font-weight:700; font-size: 1.1rem;">...</span> <small style="color:var(--text-sub)">Users</small></div>
-                </div>
-            </div>
-
-            <div class="card weather-card">
-                <div class="location-label"><i class="fas fa-location-arrow"></i> 内蒙古</div>
-                <div class="weather-info" id="temp">--°C</div>
-                <div id="weather-desc" style="font-size: 0.95rem; font-weight: 500;">获取天气中...</div>
-            </div>
-
-            <div class="card skills-card">
-                <span style="font-size: 0.85rem; color: var(--text-sub); font-weight: 600;">TECH STACK</span>
-                <div class="tech-icons">
-                    <div><i class="fab fa-python"></i><span>Python</span></div>
-                    <div><i class="fas fa-square-root-variable"></i><span>Math</span></div>
-                    <div><i class="fas fa-brain"></i><span>AI</span></div>
-                    <div><i class="fas fa-gamepad"></i><span>Godot</span></div>
-                </div>
-            </div>
-
-            <div class="card quote-card" id="quote-box" title="点击刷新一言">
-                <div class="quote-content" id="quote-text">生活原本沉闷，但跑起来就会有风。</div>
-                <div class="quote-author" id="quote-from">—— 「熵」</div>
-            </div>
-
-            <!-- 熵 Beta AI - Markdown 增强区 -->
-            <div class="card ai-card">
-                <div style="display: flex; align-items: center; gap: 10px;">
-                    <i class="fas fa-sparkles" style="color:var(--accent)"></i>
-                    <span style="font-weight: 700; font-size: 1rem;">熵 Beta (AI)</span>
-                </div>
-                <div id="ai-response">你好！我是熵-beta，你可以问我一些问题</div>
-                <div class="ai-input-area">
-                    <input type="text" id="ai-input" class="ai-input" placeholder="输入问题">
-                    <button id="ai-send" class="ai-btn"><i class="fas fa-paper-plane"></i></button>
-                </div>
-            </div>
-
-            <div class="card goals-card">
-                <div class="goal-item">
-                    <i class="fas fa-graduation-cap"></i>
-                    <div class="goal-title">学术卓越</div>
-                    <div class="goal-desc">在高考中取得优异成绩</div>
-                </div>
-                <div class="goal-item">
-                    <i class="fas fa-code-branch"></i>
-                    <div class="goal-title">独立开发</div>
-                    <div class="goal-desc">完成一款完整的独立游戏</div>
-                </div>
-                <div class="goal-item">
-                    <i class="fas fa-infinity"></i>
-                    <div class="goal-title">数学研究</div>
-                    <div class="goal-desc">深入探索数学建模与分析</div>
-                </div>
-            </div>
-
+        <div class="header">
+            <h1>个人名片</h1>
+            <p>我的个人专属网站</p>
         </div>
-
-        <div class="footer">
-            <div class="social-row">
-                <a href="https://github.com/Nektropy" class="social-circle"><i class="fab fa-github"></i></a>
-                <a href="mailto:psz0410@163.com" class="social-circle"><i class="fas fa-envelope"></i></a>
-                <a href="#" class="social-circle"><i class="fab fa-qq"></i></a>
+        <div class="card">
+            <div class="card-header">
+                <div class="profile-img">
+                    <img src="head.png" alt="头像" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">
+                </div>
+                <h2 class="name">熵</h2>
+                <p class="title">Nektropy</p>
             </div>
-            <div class="copyright">&copy; 2026 熵的个人空间 | 最后更新：2026年1月25日</div>
+            <div class="card-content">
+                <div class="left-section">
+                    <div class="section">
+                        <h3 class="section-title"><i class="fas fa-user"></i> 关于我</h3>
+                        <div class="about">
+                            <p>我是一名热爱学习的高中生，对计算机科学充满热情。我享受将创意转化为现实的过程，并喜欢解决复杂的问题。</p>
+                            <p>我的目标是进入一所优秀的大学，继续学习计算机科学。</p>
+                        </div>
+                    </div>
+                    <div class="section">
+                        <h3 class="section-title"><i class="fas fa-code"></i> 技能与兴趣</h3>
+                        <p>我目前正在学习以下技能：</p>
+                        <div class="skills">
+                            <span class="skill">英语</span>
+                            <span class="skill">数学</span>
+                            <span class="skill">建模</span>
+                            <span class="skill">PS</span>
+                            <span class="skill">Python</span>
+                            <span class="skill">godot</span>
+                        </div>
+                        <p style="margin-top: 20px;">我的兴趣爱好：</p>
+                        <div class="hobbies">
+                            <span class="hobby">游戏</span>
+                            <span class="hobby">音乐</span>
+                            <span class="hobby">数学</span>
+                            <span class="hobby">编程</span>
+                            <span class="hobby">科技</span>
+                            <span class="hobby">AI</span>
+                        </div>
+                    </div>
+
+                    <!-- 建站时间模块 -->
+                    <div class="section">
+                        <h3 class="section-title"><i class="fas fa-clock"></i> 网站运行时间</h3>
+                        <div class="site-age-container">
+                            <div class="site-age-item">
+                                <span class="site-age-label">建站时间：</span>
+                                <span class="site-age-value" id="site-start-date">2026-01-23</span>
+                            </div>
+                            <div class="site-age-item">
+                                <span class="site-age-label">已运行：</span>
+                                <span class="site-age-value" id="site-running-time">0 天 0 小时 0 分钟 0 秒</span>
+                            </div>
+                            <div class="site-age-item">
+                                <span class="site-age-label">今天是：</span>
+                                <span class="site-age-value" id="current-date">-</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="right-section">
+                    <div class="section">
+                        <h3 class="section-title"><i class="fas fa-address-book"></i> 联系信息</h3>
+                        <ul class="contact-list">
+                            <li>
+                                <i class="fas fa-envelope"></i>
+                                <div>
+                                    <strong>邮箱</strong><br>
+                                    psz0410@163.com
+                                </div>
+                            </li>
+                            <li>
+                                <i class="fas fa-map-marker-alt"></i>
+                                <div>
+                                    <strong>IP归属地</strong><br>
+                                    内蒙古
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3 class="section-title"><i class="fas fa-bullseye"></i> 未来目标</h3>
+                        <div class="about">
+                            <p>1. 在高考中取得优异成绩，进入理想的大学</p>
+                            <p>2. 深入学习计算机科学，掌握更多编程语言</p>
+                            <p>3. 做一个有趣的独立游戏</p>
+                            <p>4. 提高英语水平</p>
+                        </div>
+                    </div>
+
+                    <!-- 随机名言模块 -->
+                    <div class="section">
+                        <h3 class="section-title"><i class="fas fa-quote-left"></i> 今日名言</h3>
+                        <div class="quote-container">
+                            <button class="refresh-quote" id="refresh-quote" title="刷新名言">
+                                <i class="fas fa-redo"></i>
+                            </button>
+                            <div class="quote-icon">
+                                <i class="fas fa-quote-left"></i>
+                            </div>
+                            <div class="quote-text" id="quote-text">
+                                正在加载名言...
+                            </div>
+                            <div class="quote-author" id="quote-author">
+                                —— 一言API
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <p>感谢访问我的个人名片网站！欢迎与我联系交流</p>
+
+                <!-- 访问统计显示区域 -->
+                <div class="visit-stats">
+                    <span id="busuanzi_container_site_pv">
+                        本站总访问量 <span id="busuanzi_value_site_pv" class="stat-number">0</span> 次 | 
+                        访客数 <span id="busuanzi_value_site_uv" class="stat-number">0</span> 人
+                    </span>
+                </div>
+
+                <div class="social-links">
+                    <a href="https://github.com/Nektropy" title="GitHub"><i class="fab fa-github"></i></a>
+                    <a href="https://qm.qq.com/cgi-bin/qm/qr?k=3977278530" title="QQ"><i class="fab fa-qq"></i></a>
+                    <a href="mailto:psz0410@163.com" title="邮箱"><i class="fas fa-envelope"></i></a>
+                </div>
+                <p style="margin-top: 15px;">© 2026 熵的个人名片 | 最后更新: 2026年1月24日</p>
+            </div>
         </div>
     </div>
 
+    <!-- 主题切换按钮 -->
+    <div class="theme-switcher" id="themeSwitcher">
+        <i class="fas fa-moon"></i>
+        <span>暗色模式</span>
+    </div>
+
+    <!-- 不蒜子统计脚本 -->
     <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
     <script>
-        // 配置 Marked.js 高亮
-        marked.setOptions({
-            highlight: function(code, lang) {
-                const language = hljs.getLanguage(lang) ? lang : 'plaintext';
-                return hljs.highlight(code, { language }).value;
-            },
-            breaks: true
+        // 主题切换功能
+        document.getElementById('themeSwitcher').addEventListener('click', function() {
+            document.body.classList.toggle('dark-mode');
+            const icon = this.querySelector('i');
+            const text = this.querySelector('span');
+            if (document.body.classList.contains('dark-mode')) {
+                icon.className = 'fas fa-sun';
+                text.textContent = '亮色模式';
+            } else {
+                icon.className = 'fas fa-moon';
+                text.textContent = '暗色模式';
+            }
         });
 
-        // 1. 动态流动计时器
-        const startTime = new Date('2026-01-23T20:45:00').getTime();
-        function updateRuntime() {
-            const now = new Date().getTime();
-            const diff = now - startTime;
-            const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-            const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-            const s = Math.floor((diff % (1000 * 60)) / 1000);
-            const ms = Math.floor(diff % 1000);
-            document.getElementById('runtime').innerHTML = 
-                `${d}d ${h.toString().padStart(2,'0')}h ${m.toString().padStart(2,'0')}m ${s.toString().padStart(2,'0')}s <span style="font-size:1rem; opacity:0.5">${ms.toString().padStart(3,'0')}ms</span>`;
+        // 建站时间计算功能
+        const siteCreationDate = new Date('2026-01-23T20:45:00');
+
+        function updateSiteRunningTime() {
+            const now = new Date();
+            const diff = now - siteCreationDate;
+
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+            const formatDate = (date) => {
+                return date.getFullYear() + '-' + 
+                       (date.getMonth() + 1).toString().padStart(2, '0') + '-' + 
+                       date.getDate().toString().padStart(2, '0');
+            };
+
+            document.getElementById('site-running-time').textContent = 
+                `${days} 天 ${hours} 小时 ${minutes} 分钟 ${seconds} 秒`;
+            document.getElementById('current-date').textContent = formatDate(now);
         }
-        setInterval(updateRuntime, 50);
 
-        // 2. 天气
-        async function fetchWeather() {
+        // 从一言API获取随机名言
+        async function fetchHitokoto() {
             try {
-                const res = await fetch('https://wttr.in/Hohhot?format=j1');
-                const data = await res.json();
-                document.getElementById('temp').innerText = `${data.current_condition[0].temp_C}°C`;
-                document.getElementById('weather-desc').innerText = data.current_condition[0].lang_zh?.[0]?.value || data.current_condition[0].weatherDesc[0].value;
-            } catch (e) { document.getElementById('temp').innerText = "N/A"; }
-        }
-        fetchWeather();
+                // 使用一言API
+                const response = await fetch('https://v1.hitokoto.cn/');
 
-        // 3. 一言
-        async function fetchQuote() {
-            try {
-                const res = await fetch('https://v1.hitokoto.cn');
-                const data = await res.json();
-                document.getElementById('quote-text').innerText = data.hitokoto;
-                document.getElementById('quote-from').innerText = `—— 「${data.from}」`;
-            } catch (err) {}
-        }
-        fetchQuote();
-        document.getElementById('quote-box').onclick = fetchQuote;
+                if (!response.ok) {
+                    throw new Error('网络响应不正常');
+                }
 
-        // 4. AI 聊天 + Markdown
-        const aiBtn = document.getElementById('ai-send');
-        const aiInput = document.getElementById('ai-input');
-        const aiBox = document.getElementById('ai-response');
-        const apiKey = ""; 
+                const data = await response.json();
 
-        async function askAI() {
-            const query = aiInput.value.trim();
-            if (!query) return;
-            
-            aiBox.innerHTML = "思考中...";
-            aiInput.value = "";
+                // 显示名言
+                document.getElementById('quote-text').textContent = data.hitokoto;
 
-            try {
-                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`, {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({
-                        contents: [{ parts: [{ text: `请使用Markdown格式回答。你现在是"熵"的AI助手。用户问：${query}` }] }]
-                    })
-                });
-                const result = await response.json();
-                const text = result.candidates?.[0]?.content?.parts?.[0]?.text || "AI 好像遇到了瓶颈。";
-                
-                // 使用 marked 解析 Markdown 并触发高亮
-                aiBox.innerHTML = marked.parse(text);
-                aiBox.scrollTo({ top: aiBox.scrollHeight, behavior: 'smooth' });
-            } catch (err) {
-                aiBox.innerHTML = "连接失败，AI 接口暂时不可用。";
+                // 如果有作者，显示作者，否则显示来源
+                if (data.from_who) {
+                    document.getElementById('quote-author').textContent = `—— ${data.from_who}`;
+                } else if (data.from) {
+                    document.getElementById('quote-author').textContent = `—— ${data.from}`;
+                } else {
+                    document.getElementById('quote-author').textContent = '—— 佚名';
+                }
+
+                return data;
+            } catch (error) {
+                console.error('获取名言失败:', error);
+
+                // 备用名言列表
+                const backupQuotes = [
+                    {text: "代码如诗，逻辑如画。每一行代码都是对世界的理解，每一次调试都是对真理的探索。", author: "计算机科学"},
+                    {text: "学习编程不是记住所有语法，而是学会如何思考。问题从来不是问题，而是挑战的开始。", author: "编程哲学"},
+                    {text: "成功不是终点，失败不是终结。重要的是继续前进的勇气。", author: "温斯顿·丘吉尔"},
+                    {text: "编程是21世纪的超级能力，它让你能够创造任何你想象到的东西。", author: "科技梦想家"},
+                    {text: "数学是科学的语言，编程是数学的实践。两者结合，能创造无限可能。", author: "数学与计算机"}
+                ];
+
+                // 随机选择一个备用名言
+                const randomIndex = Math.floor(Math.random() * backupQuotes.length);
+                const backupQuote = backupQuotes[randomIndex];
+
+                document.getElementById('quote-text').textContent = backupQuote.text;
+                document.getElementById('quote-author').textContent = `—— ${backupQuote.author}`;
+
+                return backupQuote;
             }
         }
-        aiBtn.onclick = askAI;
-        aiInput.onkeypress = (e) => { if(e.key === 'Enter') askAI(); };
 
-        // 5. 主题切换
-        const themeBtn = document.getElementById('themeBtn');
-        themeBtn.onclick = () => {
-            document.body.classList.toggle('light-mode');
-            themeBtn.innerHTML = document.body.classList.contains('light-mode') ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
-        };
+        // 刷新按钮事件
+        function initQuoteRefresh() {
+            const refreshButton = document.getElementById('refresh-quote');
+
+            if (refreshButton) {
+                // 重新绑定事件
+                refreshButton.addEventListener('click', async function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    // 按钮旋转动画
+                    this.style.transform = 'rotate(180deg)';
+                    setTimeout(() => {
+                        this.style.transform = 'rotate(0deg)';
+                    }, 300);
+
+                    // 显示加载状态
+                    document.getElementById('quote-text').textContent = '正在获取新名言...';
+                    document.getElementById('quote-author').textContent = '—— 加载中';
+
+                    // 获取新名言
+                    await fetchHitokoto();
+
+                    // 容器动画
+                    const quoteContainer = document.querySelector('.quote-container');
+                    quoteContainer.style.opacity = '0.7';
+                    setTimeout(() => {
+                        quoteContainer.style.transition = 'opacity 0.3s ease';
+                        quoteContainer.style.opacity = '1';
+                    }, 10);
+                });
+            }
+        }
+
+        // 点击名言区域也可以刷新
+        function initQuoteContainerClick() {
+            const quoteContainer = document.querySelector('.quote-container');
+            if (quoteContainer) {
+                quoteContainer.addEventListener('click', function(e) {
+                    if (!e.target.closest('.refresh-quote')) {
+                        document.getElementById('refresh-quote').click();
+                    }
+                });
+            }
+        }
+
+        // 初始化函数
+        async function initPage() {
+            // 更新建站时间
+            updateSiteRunningTime();
+
+            // 每秒更新建站时间
+            setInterval(updateSiteRunningTime, 1000);
+
+            // 初始化名言刷新功能
+            initQuoteRefresh();
+            initQuoteContainerClick();
+
+            // 页面加载时获取第一条名言
+            await fetchHitokoto();
+
+            // 简单动画效果 - 卡片加载时淡入
+            const card = document.querySelector('.card');
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            setTimeout(() => {
+                card.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+                card.style.opacity = '1';
+                card.style.transform = 'translateY(0)';
+            }, 100);
+
+            // 为技能和兴趣标签添加点击效果
+            const tags = document.querySelectorAll('.skill, .hobby');
+            tags.forEach(tag => {
+                tag.addEventListener('click', function() {
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = 'scale(1)';
+                    }, 150);
+                });
+            });
+
+            // 确保不蒜子统计正确显示
+            setTimeout(() => {
+                const pv = document.getElementById('busuanzi_value_site_pv');
+                const uv = document.getElementById('busuanzi_value_site_uv');
+
+                if (pv && pv.textContent === '0') {
+                    const localVisits = localStorage.getItem('nektropy_visit_count') || 0;
+                    const localVisitors = localStorage.getItem('nektropy_visitor_count') || 1;
+
+                    pv.textContent = localVisits;
+                    uv.textContent = localVisitors;
+
+                    const newVisits = parseInt(localVisits) + 1;
+                    localStorage.setItem('nektropy_visit_count', newVisits);
+
+                    if (!localStorage.getItem('has_visited_nektropy')) {
+                        const newVisitors = parseInt(localVisitors) + 1;
+                        localStorage.setItem('nektropy_visitor_count', newVisitors);
+                        localStorage.setItem('has_visited_nektropy', 'true');
+                    }
+                }
+            }, 3000);
+        }
+
+        // 页面加载完成后初始化
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initPage);
+        } else {
+            initPage();
+        }
     </script>
 </body>
-    </html>
+</html>
