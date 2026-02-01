@@ -948,4 +948,145 @@
                     }, 300);
                     
                     document.getElementById('quote-text').textContent = '正在获取新名言...';
-                    document.getElementById('quote-autho
+                    document.getElementById('quote-author').textContent = '—— 加载中';
+                    
+                    await fetchHitokoto();
+                    
+                    const quoteContainer = document.querySelector('.quote-card');
+                    quoteContainer.style.opacity = '0.7';
+                    setTimeout(() => {
+                        quoteContainer.style.transition = 'opacity 0.3s ease';
+                        quoteContainer.style.opacity = '1';
+                    }, 10);
+                });
+            }
+        }
+
+        // 初始化函数
+        async function initPage() {
+            // 更新建站时间
+            updateSiteRunningTime();
+            setInterval(updateSiteRunningTime, 1000); // 每秒更新一次
+            
+            // 初始化名言功能
+            initQuoteRefresh();
+            await fetchHitokoto();
+            
+            // 卡片进入动画
+            const cards = document.querySelectorAll('.card');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px) scale(0.98)';
+                setTimeout(() => {
+                    card.style.transition = 'opacity 0.8s ease, transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1)';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0) scale(1)';
+                }, 200 + index * 100);
+            });
+            
+            // 为技能和兴趣标签添加交互效果
+            const tags = document.querySelectorAll('.skill, .hobby');
+            tags.forEach(tag => {
+                tag.addEventListener('click', function() {
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = 'scale(1)';
+                    }, 150);
+                });
+                
+                tag.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-2px)';
+                });
+                
+                tag.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                });
+            });
+            
+            // 卡片悬浮效果增强
+            const cardsAll = document.querySelectorAll('.card');
+            cardsAll.forEach(card => {
+                card.addEventListener('mouseenter', () => {
+                    card.style.transform = 'translateY(-6px)';
+                });
+                
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = 'translateY(-2px)';
+                });
+            });
+            
+            // 本地访问统计回退
+            setTimeout(() => {
+                const pv = document.getElementById('busuanzi_value_site_pv');
+                const uv = document.getElementById('busuanzi_value_site_uv');
+                
+                if (pv && pv.textContent === '0') {
+                    const localVisits = parseInt(localStorage.getItem('nektropy_visit_count') || '158');
+                    const localVisitors = parseInt(localStorage.getItem('nektropy_visitor_count') || '42');
+                    
+                    pv.textContent = localVisits;
+                    uv.textContent = localVisitors;
+                    
+                    const newVisits = localVisits + 1;
+                    localStorage.setItem('nektropy_visit_count', newVisits);
+                    
+                    if (!localStorage.getItem('has_visited_nektropy')) {
+                        const newVisitors = localVisitors + 1;
+                        localStorage.setItem('nektropy_visitor_count', newVisitors);
+                        localStorage.setItem('has_visited_nektropy', 'true');
+                    }
+                }
+            }, 2000);
+            
+            // 添加背景粒子效果
+            createBackgroundParticles();
+        }
+        
+        // 创建背景粒子效果
+        function createBackgroundParticles() {
+            const colors = [
+                'rgba(58, 134, 255, 0.2)',
+                'rgba(131, 56, 236, 0.2)',
+                'rgba(255, 0, 110, 0.2)',
+                'rgba(76, 201, 240, 0.2)'
+            ];
+            
+            for (let i = 0; i < 15; i++) {
+                const particle = document.createElement('div');
+                particle.style.position = 'fixed';
+                particle.style.width = Math.random() * 100 + 50 + 'px';
+                particle.style.height = particle.style.width;
+                particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+                particle.style.borderRadius = '50%';
+                particle.style.filter = 'blur(20px)';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.zIndex = '0';
+                particle.style.opacity = '0';
+                particle.style.transition = 'opacity 1s ease';
+                
+                document.body.appendChild(particle);
+                
+                // 延迟显示，避免影响加载性能
+                setTimeout(() => {
+                    particle.style.opacity = '0.3';
+                }, 100 + i * 100);
+                
+                // 添加轻微浮动动画
+                setInterval(() => {
+                    const x = Math.random() * 10 - 5;
+                    const y = Math.random() * 10 - 5;
+                    particle.style.transform = `translate(${x}px, ${y}px)`;
+                }, 3000 + Math.random() * 2000);
+            }
+        }
+
+        // 页面加载完成后初始化
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initPage);
+        } else {
+            initPage();
+        }
+    </script>
+</body>
+</html>
