@@ -4,6 +4,19 @@
   
   
   <entry>
+    <title>测试2</title>
+    <link href="/blog/2026/02/01/%E6%B5%8B%E8%AF%952/"/>
+    <url>/blog/2026/02/01/%E6%B5%8B%E8%AF%952/</url>
+    
+    <content type="html"><![CDATA[<p>wu</p>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>评论测试</title>
     <link href="/blog/2026/02/01/%E8%AF%84%E8%AE%BA%E6%B5%8B%E8%AF%95/"/>
     <url>/blog/2026/02/01/%E8%AF%84%E8%AE%BA%E6%B5%8B%E8%AF%95/</url>
@@ -15,25 +28,6 @@
     <tags>
       
       <tag>测试</tag>
-      
-    </tags>
-    
-  </entry>
-  
-  
-  
-  <entry>
-    <title>我的第一篇文章</title>
-    <link href="/blog/2026/01/31/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/"/>
-    <url>/blog/2026/01/31/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/</url>
-    
-    <content type="html"><![CDATA[<ol><li>内容</li><li>无</li></ol>]]></content>
-    
-    
-    
-    <tags>
-      
-      <tag>&#92;[测试]</tag>
       
     </tags>
     
