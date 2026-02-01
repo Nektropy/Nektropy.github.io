@@ -10,358 +10,662 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Microsoft YaHei', sans-serif;
         }
+        
+        :root {
+            --primary-color: #3a86ff;
+            --secondary-color: #8338ec;
+            --accent-color: #ff006e;
+            --text-primary: #f8f9fa; /* 调整为接近白色 */
+            --text-secondary: #e9ecef; /* 调整为接近白色 */
+            --bg-primary: #f8f9fa;
+            --bg-secondary: #ffffff;
+            --glass-bg: rgba(255, 255, 255, 0.15);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .dark-mode {
+            --primary-color: #4cc9f0;
+            --secondary-color: #4361ee;
+            --accent-color: #f72585;
+            --text-primary: #f8f9fa;
+            --text-secondary: #e9ecef;
+            --bg-primary: #121212;
+            --bg-secondary: #1e1e1e;
+            --glass-bg: rgba(30, 30, 30, 0.4);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        }
+        
         body {
-            background-color: #f7f9fc;
-            color: #333;
+            /* 自定义背景图片 */
+            background-image: url('bg.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: var(--text-primary); /* 使用调整后的文字颜色 */
             line-height: 1.6;
-            padding: 20px;
             min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
         }
-        .container {
-            max-width: 1000px;
+        
+        /* 背景覆盖层，增强文字可读性 */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            z-index: -2;
         }
+        
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            position: relative;
+        }
+        
         .header {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 40px;
+            position: relative;
         }
+        
         .header h1 {
-            font-size: 2.5rem;
-            color: #2c3e50;
-            margin-bottom: 10px;
-        }
-        .header p {
-            color: #7f8c8d;
-            font-size: 1.1rem;
-        }
-        .card {
-            background-color: white;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 850px;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-        }
-        .card-header {
-            background: linear-gradient(135deg, #3498db, #8e44ad);
+            font-size: 2.8rem;
+            font-weight: 800;
             color: white;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .header p {
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 1.1rem;
+            font-weight: 400;
+        }
+        
+        /* 多卡片布局 */
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px) saturate(180%);
+            -webkit-backdrop-filter: blur(12px) saturate(180%);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            box-shadow: var(--shadow);
             padding: 30px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
+            transition: var(--transition);
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
         }
+        
+        /* 为不同卡片添加不同的偏移和旋转 */
+        .card:nth-child(odd) {
+            transform: rotate(-0.5deg);
+        }
+        
+        .card:nth-child(even) {
+            transform: rotate(0.5deg);
+        }
+        
+        .card:hover {
+            transform: translateY(-4px) rotate(0deg) !important;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        /* 头像卡片特殊样式 */
+        .profile-card {
+            grid-column: span 2;
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            padding: 30px;
+        }
+        
         .profile-img {
-            width: 150px;
-            height: 150px;
+            width: 140px;
+            height: 140px;
             border-radius: 50%;
-            border: 5px solid rgba(255, 255, 255, 0.3);
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+            flex-shrink: 0;
+            position: relative;
+        }
+        
+        .profile-img img {
+            width: 100%;
+            height: 100%;
             object-fit: cover;
-            margin-bottom: 20px;
-            background-color: #ecf0f1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3.5rem;
-            color: #3498db;
         }
+        
+        .profile-info {
+            flex: 1;
+        }
+        
         .name {
-            font-size: 2.2rem;
+            font-size: 2.4rem;
             font-weight: 700;
-            margin-bottom: 5px;
+            color: white;
+            margin-bottom: 8px;
+            line-height: 1.2;
         }
+        
         .title {
             font-size: 1.2rem;
-            opacity: 0.9;
-            margin-bottom: 15px;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 16px;
         }
-        .card-content {
-            display: flex;
-            flex-wrap: wrap;
-            padding: 0;
-        }
-        .left-section, .right-section {
-            padding: 30px;
-            flex: 1;
-            min-width: 300px;
-        }
-        .section-title {
-            font-size: 1.3rem;
-            color: #2c3e50;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #f1f1f1;
-            display: flex;
+        
+        .status {
+            display: inline-flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            color: white;
+            backdrop-filter: blur(10px);
         }
-        .section-title i {
-            color: #3498db;
+        
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: #4cd964;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
         }
-        .about p {
-            margin-bottom: 15px;
-            color: #555;
+        
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
         }
-        .contact-list {
-            list-style-type: none;
-        }
-        .contact-list li {
-            margin-bottom: 15px;
+        
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 24px;
             display: flex;
             align-items: center;
             gap: 12px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid rgba(0, 0, 0, 0.05);
         }
-        .contact-list i {
-            width: 35px;
-            height: 35px;
-            background-color: #f1f8ff;
-            border-radius: 50%;
+        
+        .dark-mode .card-title {
+            border-bottom-color: rgba(255, 255, 255, 0.05);
+        }
+        
+        .card-title i {
+            font-size: 1.2rem;
+        }
+        
+        .about p {
+            margin-bottom: 16px;
+            color: var(--text-secondary); /* 使用调整后的文字颜色 */
+            font-size: 1.05rem;
+            line-height: 1.7;
+        }
+        
+        .contact-list {
+            list-style: none;
+        }
+        
+        .contact-list li {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        
+        .contact-icon {
+            width: 44px;
+            height: 44px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #3498db;
-        }
-        .skills {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 10px;
-        }
-        .skill {
-            background-color: #f1f8ff;
-            color: #3498db;
-            padding: 8px 15px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-        }
-        .hobbies {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 10px;
-        }
-        .hobby {
-            background-color: #f8f9fa;
-            color: #555;
-            padding: 8px 15px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-        }
-
-        /* 名言展示区域样式 */
-        .quote-container {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            border-radius: 12px;
-            padding: 20px;
-            margin: 25px 0;
             color: white;
+            font-size: 1.2rem;
+        }
+        
+        .contact-details {
+            flex: 1;
+        }
+        
+        .contact-details strong {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: var(--text-primary); /* 使用调整后的文字颜色 */
+        }
+        
+        .contact-details span {
+            color: var(--text-secondary); /* 使用调整后的文字颜色 */
+            font-size: 0.95rem;
+        }
+        
+        .skills-grid, .hobbies-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 16px;
+        }
+        
+        .skill, .hobby {
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        
+        .skill {
+            background: rgba(58, 134, 255, 0.1);
+            color: var(--primary-color);
+            border: 1px solid rgba(58, 134, 255, 0.2);
+        }
+        
+        .hobby {
+            background: rgba(255, 0, 110, 0.1);
+            color: var(--accent-color);
+            border: 1px solid rgba(255, 0, 110, 0.2);
+        }
+        
+        .skill:hover, .hobby:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* 名言卡片 */
+        .quote-card {
+            grid-column: 1 / -1;
+            background: linear-gradient(135deg, rgba(58, 134, 255, 0.1), rgba(131, 56, 236, 0.1));
+            border: 1px solid rgba(58, 134, 255, 0.2);
             position: relative;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            padding-top: 60px; /* 为刷新按钮留出空间 */
         }
-        .quote-icon {
-            font-size: 1.5rem;
-            opacity: 0.7;
-            margin-bottom: 10px;
+        
+        .quote-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(255, 0, 110, 0.1) 0%, transparent 70%);
+            z-index: 0;
         }
+        
+        .quote-content {
+            position: relative;
+            z-index: 1;
+        }
+        
         .quote-text {
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             font-style: italic;
-            line-height: 1.6;
-            margin-bottom: 10px;
+            line-height: 1.8;
+            color: var(--text-primary); /* 使用调整后的文字颜色 */
+            margin-bottom: 16px;
             min-height: 60px;
         }
+        
         .quote-author {
             text-align: right;
-            font-size: 0.9rem;
-            opacity: 0.9;
+            color: var(--text-secondary); /* 使用调整后的文字颜色 */
+            font-size: 0.95rem;
         }
+        
         .refresh-quote {
             position: absolute;
-            top: 15px;
-            right: 15px;
-            background: rgba(255, 255, 255, 0.2);
-            border: none;
-            border-radius: 50%;
+            top: 20px;
+            right: 20px;
             width: 40px;
             height: 40px;
-            color: white;
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            border-radius: 50%;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.3s ease;
-            z-index: 10;
+            color: var(--primary-color);
+            transition: var(--transition);
+            z-index: 2;
         }
+        
         .refresh-quote:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: rotate(90deg);
+            background: white;
+            transform: rotate(180deg);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
         }
-
-        /* 建站时间样式 */
-        .site-age-container {
-            background-color: #f8f9fa;
-            border-radius: 12px;
+        
+        /* 深色模式下刷新按钮样式调整 */
+        .dark-mode .refresh-quote {
+            background: rgba(30, 30, 30, 0.9);
+            color: var(--primary-color);
+        }
+        
+        /* 建站时间卡片 */
+        .site-age-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-top: 16px;
+        }
+        
+        .age-item {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
             padding: 20px;
-            margin: 20px 0;
-            border-left: 5px solid #3498db;
-        }
-        .site-age-item {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 10px;
-            padding-bottom: 8px;
-            border-bottom: 1px solid #eee;
-        }
-        .site-age-item:last-child {
-            margin-bottom: 0;
-            padding-bottom: 0;
-            border-bottom: none;
-        }
-        .site-age-label {
-            color: #666;
-        }
-        .site-age-value {
-            font-weight: bold;
-            color: #2c3e50;
-        }
-
-        .footer {
+            transition: var(--transition);
             text-align: center;
-            padding: 20px;
-            background-color: #f8f9fa;
-            color: #7f8c8d;
-            font-size: 0.9rem;
-            border-top: 1px solid #eee;
         }
+        
+        .age-item:hover {
+            transform: translateY(-2px);
+        }
+        
+        .age-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary); /* 使用调整后的文字颜色 */
+            margin-bottom: 8px;
+        }
+        
+        .age-value {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            min-height: 1.5em;
+        }
+        
+        .age-detail {
+            font-size: 0.8rem;
+            color: var(--text-secondary); /* 使用调整后的文字颜色 */
+            margin-top: 4px;
+        }
+        
+        /* 页脚 */
+        .footer {
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        
+        .dark-mode .footer {
+            border-top-color: rgba(255, 255, 255, 0.1);
+        }
+        
         .social-links {
             display: flex;
             justify-content: center;
-            gap: 20px;
-            margin-top: 20px;
+            gap: 16px;
+            margin: 24px 0;
         }
-        .social-links a {
+        
+        .social-link {
+            width: 48px;
+            height: 48px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 40px;
-            height: 40px;
-            background-color: #f1f8ff;
-            border-radius: 50%;
-            color: #3498db;
+            color: var(--primary-color);
             text-decoration: none;
-            transition: all 0.3s ease;
+            transition: var(--transition);
         }
-        .social-links a:hover {
-            background-color: #3498db;
+        
+        .social-link:hover {
+            background: var(--primary-color);
             color: white;
-            transform: translateY(-3px);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(58, 134, 255, 0.3);
         }
-
-        /* 访问统计样式 */
+        
         .visit-stats {
-            margin: 15px 0;
-            padding: 10px;
-            background-color: #f8f9fa;
-            border-radius: 8px;
-            display: inline-block;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 12px 24px;
+            display: inline-flex;
+            gap: 16px;
+            margin: 16px 0;
         }
-        .visit-stats span {
-            display: inline-block;
-            margin: 0 5px;
+        
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
+        
         .stat-number {
-            font-weight: bold;
-            color: #3498db;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary-color);
         }
-
-        @media (max-width: 768px) {
-            .card-content {
-                flex-direction: column;
-            }
-            .card-header {
-                padding: 20px;
-            }
-            .name {
-                font-size: 1.8rem;
-            }
-            .header h1 {
-                font-size: 2rem;
-            }
+        
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--text-secondary); /* 使用调整后的文字颜色 */
+            margin-top: 4px;
         }
-
-        /* 自定义颜色切换按钮 */
+        
+        .footer-text {
+            color: var(--text-secondary); /* 使用调整后的文字颜色 */
+            font-size: 0.9rem;
+            margin-top: 20px;
+        }
+        
+        /* ICP 备案样式 */
+        .icp-container {
+            margin-top: 20px;
+        }
+        
+        .icp-link {
+            text-decoration: none;
+            color: var(--text-secondary); /* 使用调整后的文字颜色 */
+            font-size: 0.85rem;
+            transition: var(--transition);
+        }
+        
+        .icp-link:hover {
+            color: var(--primary-color);
+        }
+        
+        /* 主题切换按钮 */
         .theme-switcher {
             position: fixed;
             top: 20px;
             right: 20px;
-            background: white;
-            padding: 8px 15px;
-            border-radius: 20px;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-            cursor: pointer;
+            width: 48px;
+            height: 48px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 50%;
             display: flex;
             align-items: center;
-            gap: 8px;
-            font-size: 0.9rem;
+            justify-content: center;
+            color: var(--primary-color);
+            cursor: pointer;
+            transition: var(--transition);
             z-index: 1000;
+            box-shadow: var(--shadow);
         }
-        .theme-switcher i {
-            color: #f39c12;
+        
+        .theme-switcher:hover {
+            transform: rotate(30deg) scale(1.1);
         }
-        .dark-mode {
-            background-color: #1a1a2e;
-            color: #e6e6e6;
+        
+        /* 响应式设计 - 移动端优化 */
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .cards-container {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .profile-card {
+                grid-column: 1;
+                flex-direction: column;
+                text-align: center;
+                gap: 20px;
+            }
+            
+            .profile-img {
+                width: 120px;
+                height: 120px;
+            }
+            
+            .name {
+                font-size: 2rem;
+            }
+            
+            .card {
+                padding: 20px;
+                transform: none !important;
+            }
+            
+            .theme-switcher {
+                top: 15px;
+                right: 15px;
+                width: 42px;
+                height: 42px;
+            }
+            
+            /* 移动端卡片排列更紧凑 */
+            .card-title {
+                font-size: 1.2rem;
+            }
+            
+            .about p {
+                font-size: 1rem;
+            }
+            
+            .quote-card {
+                padding-top: 50px;
+            }
+            
+            .refresh-quote {
+                top: 15px;
+                right: 15px;
+                width: 36px;
+                height: 36px;
+            }
         }
-        .dark-mode .card {
-            background-color: #16213e;
-            color: #e6e6e6;
+        
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .site-age-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .profile-info {
+                padding: 15px;
+            }
+            
+            .name {
+                font-size: 1.8rem;
+            }
+            
+            .title {
+                font-size: 1.1rem;
+            }
+            
+            .quote-card {
+                padding-top: 45px;
+            }
+            
+            .refresh-quote {
+                width: 32px;
+                height: 32px;
+            }
+            
+            .quote-text {
+                font-size: 1.1rem;
+            }
         }
-        .dark-mode .section-title {
-            color: #e6e6e6;
+        
+        /* 深色模式下文字对比度优化 */
+        .dark-mode .about p,
+        .dark-mode .contact-details span,
+        .dark-mode .quote-text,
+        .dark-mode .quote-author,
+        .dark-mode .age-label,
+        .dark-mode .footer-text,
+        .dark-mode .age-detail {
+            color: rgba(248, 249, 250, 0.9);
         }
-        .dark-mode .footer {
-            background-color: #0f3460;
-            color: #b8b8b8;
+        
+        /* 深色模式下卡片标题优化 */
+        .dark-mode .card-title {
+            color: var(--primary-color);
         }
-        .dark-mode .about p, .dark-mode .hobby {
-            color: #cccccc;
+        
+        /* 数字动画效果 */
+        .number-animation {
+            display: inline-block;
+            position: relative;
         }
-        .dark-mode .skill, .dark-mode .hobby {
-            background-color: #0f3460;
+        
+        .number-animation::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+            animation: shimmer 2s infinite;
         }
-        .dark-mode .social-links a {
-            background-color: #0f3460;
-            color: #e6e6e6;
-        }
-        .dark-mode .visit-stats {
-            background-color: #0f3460;
-            color: #b8b8b8;
-        }
-        .dark-mode .stat-number {
-            color: #4fc3f7;
-        }
-        .dark-mode .quote-container {
-            background: linear-gradient(135deg, #3a1c71, #d76d77);
-        }
-        .dark-mode .site-age-container {
-            background-color: #0f3460;
-            border-left-color: #4fc3f7;
-        }
-        .dark-mode .site-age-label {
-            color: #cccccc;
-        }
-        .dark-mode .site-age-value {
-            color: #ffffff;
+        
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
         }
     </style>
 </head>
@@ -369,177 +673,196 @@
     <div class="container">
         <div class="header">
             <h1>个人名片</h1>
-            <p>我的个人专属网站</p>
+            <p>简洁 · 个性</p>
         </div>
-        <div class="card">
-            <div class="card-header">
+        
+        <!-- 多卡片布局 -->
+        <div class="cards-container">
+            <!-- 头像卡片 -->
+            <div class="card profile-card">
                 <div class="profile-img">
-                    <img src="head.png" alt="头像" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">
+                    <img src="head.png" alt="头像">
                 </div>
-                <h2 class="name">熵</h2>
-                <p class="title">Nektropy</p>
-            </div>
-            <div class="card-content">
-                <div class="left-section">
-                    <div class="section">
-                        <h3 class="section-title"><i class="fas fa-user"></i> 关于我</h3>
-                        <div class="about">
-                            <p>本人爱学习的高中牲一枚，尤其对计算机科学充满热情。我享受将创意转化为现实的过程，并喜欢解决复杂的问题。</p>
-                            <p>我的目标是进入一所优秀的大学，继续学习计算机科学。</p>
-                        </div>
-                    </div>
-                    <div class="section">
-                        <h3 class="section-title"><i class="fas fa-code"></i> 技能与兴趣</h3>
-                        <p>我目前正在学习以下技能：</p>
-                        <div class="skills">
-                            <span class="skill">英语</span>
-                            <span class="skill">数学</span>
-                            <span class="skill">建模</span>
-                            <span class="skill">PS</span>
-                            <span class="skill">Python</span>
-                            <span class="skill">godot</span>
-                        </div>
-                        <p style="margin-top: 20px;">我的兴趣爱好：</p>
-                        <div class="hobbies">
-                            <span class="hobby">游戏</span>
-                            <span class="hobby">音乐</span>
-                            <span class="hobby">数学</span>
-                            <span class="hobby">编程</span>
-                            <span class="hobby">科技</span>
-                            <span class="hobby">AI</span>
-                        </div>
-                    </div>
-
-                    <!-- 建站时间模块 -->
-                    <div class="section">
-                        <h3 class="section-title"><i class="fas fa-clock"></i> 网站运行时间</h3>
-                        <div class="site-age-container">
-                            <div class="site-age-item">
-                                <span class="site-age-label">建站时间：</span>
-                                <span class="site-age-value" id="site-start-date">2026-01-23</span>
-                            </div>
-                            <div class="site-age-item">
-                                <span class="site-age-label">已运行：</span>
-                                <span class="site-age-value" id="site-running-time">0 天 0 小时 0 分钟 0 秒</span>
-                            </div>
-                            <div class="site-age-item">
-                                <span class="site-age-label">今天是：</span>
-                                <span class="site-age-value" id="current-date">-</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="right-section">
-                    <div class="section">
-                        <h3 class="section-title"><i class="fas fa-address-book"></i> 联系信息</h3>
-                        <ul class="contact-list">
-                            <li>
-                                <i class="fas fa-envelope"></i>
-                                <div>
-                                    <strong>邮箱</strong><br>
-                                    psz0410@163.com
-                                </div>
-                            </li>
-                            <li>
-                                <i class="fas fa-map-marker-alt"></i>
-                                <div>
-                                    <strong>IP归属地</strong><br>
-                                    内蒙古
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="section">
-                        <h3 class="section-title"><i class="fas fa-bullseye"></i> 未来目标</h3>
-                        <div class="about">
-                            <p>1. 在高考中取得优异成绩，进入理想的大学</p>
-                            <p>2. 深入学习计算机科学，掌握更多编程语言</p>
-                            <p>3. 做一个有趣的独立游戏</p>
-                            <p>4. 提高英语水平</p>
-                        </div>
-                    </div>
-
-                    <!-- 随机名言模块 -->
-                    <div class="section">
-                        <h3 class="section-title"><i class="fas fa-quote-left"></i> 今日名言</h3>
-                        <div class="quote-container">
-                            <button class="refresh-quote" id="refresh-quote" title="刷新名言">
-                                <i class="fas fa-redo"></i>
-                            </button>
-                            <div class="quote-icon">
-                                <i class="fas fa-quote-left"></i>
-                            </div>
-                            <div class="quote-text" id="quote-text">
-                                正在加载名言...
-                            </div>
-                            <div class="quote-author" id="quote-author">
-                                —— 一言API
-                            </div>
-                        </div>
+                <div class="profile-info">
+                    <h2 class="name">熵</h2>
+                    <p class="title">Nektropy</p>
+                    <div class="status">
+                        <span class="status-dot"></span>
+                        <span>地球online在线</span>
                     </div>
                 </div>
             </div>
-            <div class="footer">
-                <p>感谢访问我的个人名片网站！欢迎与我联系交流</p>
-
-                <!-- 访问统计显示区域 -->
-                <div class="visit-stats">
-                    <span id="busuanzi_container_site_pv">
-                        本站总访问量 <span id="busuanzi_value_site_pv" class="stat-number">0</span> 次 | 
-                        访客数 <span id="busuanzi_value_site_uv" class="stat-number">0</span> 人
-                    </span>
+            
+            <!-- 关于我卡片 -->
+            <div class="card">
+                <h3 class="card-title"><i class="fas fa-user"></i>关于我</h3>
+                <div class="about">
+                    <p>对计算机科学充满热情的高中牲一枚。喜欢在电脑和互联网上瞎折腾，喜欢探索新鲜事物，热爱科学技术和科幻小说。</p>
+                    <p>相信AI(人工智能)能够改变世界，目前正致力于学习基础数学知识和计算机领域技术，为未来的求知欲和好奇心打下基础。</p>
                 </div>
-
-                <div class="social-links">
-                    <a href="https://github.com/Nektropy" title="GitHub"><i class="fab fa-github"></i></a>
-                    <a href="https://qm.qq.com/cgi-bin/qm/qr?k=3977278530" title="QQ"><i class="fab fa-qq"></i></a>
-                    <a href="mailto:psz0410@163.com" title="邮箱"><i class="fas fa-envelope"></i></a>
+            </div>
+            
+            <!-- 目标愿景卡片 -->
+            <div class="card">
+                <h3 class="card-title"><i class="fas fa-bullseye"></i>目标愿景</h3>
+                <div class="about">
+                    <p>1. 在学术上追求卓越，进入大学继续学习计算机科学专业</p>
+                    <p>2. 掌握多种编程语言，提升逻辑思维和创造能力</p>
+                    <p>3. 开发有意思的独立项目或游戏</p>
+                    <p>4. 培养系统化思维和解决问题的能力</p>
                 </div>
-                <p style="margin-top: 16px;">© 2026 熵的个人名片 | 最后更新: 2026年2月1日</p>
-                <style>
-  .icp-link {
-    text-decoration: none; /* 去掉下划线 */
-    color: #77aa77; /* 黑色文字 */
-    font-size: 16px; /* 可选：设置字体大小 */
-    font-family: Arial, sans-serif; /* 可选：设置字体 */
-  }
-
-  .icp-link:hover {
-    text-decoration: none; /* 可选：鼠标悬停时显示下划线 */
-    color: #779077; /* 可选：悬停时颜色稍浅 */
-  }
-</style>
-
-<a title="萌ICP备" href="https://icp.gov.moe/?keyword=20266006" target="_blank"> <img alt="Static Badge" src="https://img.shields.io/badge/20266006%E5%8F%B7-fa2484?style=flat&logo=data%3Aimage%2Fpng%3Bbase64%2CiVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAAAXNSR0IArs4c6QAAAARzQklUCAgICHwIZIgAABHOSURBVHic7ZtpmFTF1cd%2FdXuf6VmYnhlAdiQsGkEWAQEVNb4KGsW8btGAxo1FFAIuBAyLa1BQUFGRqCB5RY3mSWIUI0beyCaLgKjI4gayjszWPT3T6618OLfn9gzTyMCgXzzP00%2FfW1Vd95z%2FPVudqoaf6Cf6iX4M0lo79P%2Fvv09vLL1fa%2B34sfhw%2FtAP1Fo7uHf1dJo9kk9F6U2goUXLfP3g2kom952mlEr%2BkPyoH%2BIhWmtlzv9slvHEyuZs%2FdLA5R5GtseHw5ABCRPC0RoS8b%2BZvbuYxvhBB%2FlN5zuVUvpE83bCANBaK5bufdR8%2FINWxrJPweBi%2FJ4cXA5QKjXI4iLtPpaAUDQEjre4rCdMHLSPs4pPGBhNDoD%2BtPI%2Bc87KLsaijyBecxHZ7ly8LutpSoQ0NVTHIJqQdq8LfC4wlD1GA5E4VEeD%2BHLe4Za%2BmOPP2u3o6L2rKfltMgCS01fPMOatPoXvDg7G6ys8XCANkQRUR9HZOaiRA9B3D0JVJ9AzP0C9sBbi1ZDtITNgkUratllmjh2w1XF3n2lNwfdxAaBf%2BHwqT67qwaYd4HSdhd9ThMM4XKWrYqANuKIPjD8TPbAYhbzkdAb0u3tRc1fD25vBQMBw1zOZRBKqYt%2BRTKzQA09F3T7wY3XNyfcdqwyNBkC%2Ft28cc1cP5s2PQDEAv6cYt%2FNwJqvjEI9D%2F1Pg9n5wbRdb4J1hmLsG5q0Evxs9eiBq3JnQyi1TAOpPW%2BHJ1bBlJ7jdkOXmMHCjCaiKlIBztb66L%2BqO%2Fh%2BpgcUPNDkA%2BovqsfrxlReoBWshFu5JlqcNXpf8Ol1Na2IQiUKrVujb%2B6PG9wWPNUkUmLse5q6CfQfAcECXIthZKqYSi8HJbWD8IPTYHrXM6QoNj61GzVsNZYfA5xV%2FoeqZV00camIHycldy%2BgB%2F1aPDH7iuAHQL24dw6R3hnLwwGl4PW3xuTM5KvBmw0390BPOgo5eW8Vf3oF%2BfBVqwzZwWW9SKaioAv1HGPZ%2FsHQH5LghnoRwDJIJOOc09PgBqGEdhBeAT4Lw2ErU4vWQjEK2uwF%2FYUJ17FuisS20bQNP%2FHKpGtZ%2B3rEBkDvzGczqUXhch9t1OAamQl%2FaEzV%2BAJzb0mZ05UHUnDXwxkZQSfC7wW3lXKVhwICnfwmj%2B0FlBNo8AqFqyMsGlyNNvaNguOG6vjC%2BP%2FQqqDUj%2Fc%2FdqLmr4L0t4HAIGPVDbHUU2rWer7aNHHVsADD5GQJZo2rRDUUgFkP37Iy6YyD6hq61E%2BhdNai5a2HBGqgKQpYHvE5bVQEOheG7yVCY3fADT5kL%2B4IiSEqIWvWOQkEARg9EjzsDVeSyAX96C%2BrJNbDtK%2FB6BQylRBvCzFfRPzQeAP1F9V10um8iAX9zAEIR9F1DUJMGoP21CMGcjahp70HoIHiyRcWNNKHTKZqAkwtg09jD%2B55dB6P%2FAQFfw7%2FVGpKmhMNYHN2tPWrcIPTIn9svoSSBmr4cFq4UPgBKQ%2FMVMzMCYGTqYHtJezCa1779uAP1wADwg3r9S9SgxSjjHtSEl2DDjXBZLzAzzibkccLm%2FTBlWd32kjCMfiWz8CDtTgfkeMHnRX2%2BG8YsQanfw4WvwNI9UOxEP32BaEvqN3C53lw2qfEAfFMOTosZU0OLPAD0W7vgyqdgw07pCxRB50J449fQKhdiSYibdppbnxwGdGxWt604G3BlZAWQ9UJ5DZSGYEhnKJkifAX8sGobDH0UtlSINrj9aWm2o9j8urxtowEwvw2CYXUnTWhdIPPtqQS80LcNfD0JDk2xBfv6TqiaJgIlMwCgEB%2Fw0iZwT4URr4tpeLxHFr6FH16%2BCuZcCm9cC0XZQAwqo1Yk8Fu8AYU5Ak6Kr92VGafOuBw29lWBI00Dii3HdaAKnE74aF%2FD6jr5XfiqHAp8DU%2Bc74MrXpZrvwde%2FxQWb4RAdmb1dyjYfgiuOq1uu54Fs1bAve%2BBQ6H3BiVCtMhGfWEJbSiM76oyiXkEEyivEmcGYGp0sQikS6rAaYDHAe0byEAfXg55nsPb0ynfJx%2BnIR670J9ZeJA%2BtwOufe3wvlyvvCBDoUrCMrwwRyIAiAyHqjNOnRmAYMRmytSoPAFAVVRLu8Ogjt2W1cj30G7iA5qa4kkY1q1u221vwsjXIc8rglZEpD3HYztkBQQTGafNXBGqTthBUgM%2BK6xUJW3YDDes%2FAb%2BdwmUlMKlp8PBKtt5NiVpoFMAHlslWjPyDPj0APgt01Sqdnmt%2FU5UWq3BrM5sApkBqF%2BYSgkVT3NuBT4453lJYwPN4P2vZJzzBJT4AlnQ52nxB4k4rP0WdlWAK02JLd5UepsCzMyKnhmAw16ibrg93dl5T3CJMZBlseKFVz8RP%2BSoJyygta7HZuYyY2aOnfUmjlvXblWLxY9GSkFWvbxBa3CltDS9HXBlzjEyA%2BB32YIqhQ7XCKq5bjvJCEUlR8hvIOTFkhCsgYJsO5rUp0hC6gam9YZSixp3AyYUikI0mkEKl5iGT6KPCkbtZ2qN4c%2FKKGZmAPJ8djKhQJXJw3WBH2VqYejus%2BC05nD1q7Z6poTvWADv3witZtr1vhSZGspCMOhkGNsferWEhIb1e2DmCth6oG5eEIrCXWfB%2Fb9omNclH8O1f4YCAUBX1KBqIxiQm9knZQTALM7CSM%2BmSsSTqpZZIkA8Ab%2FtDR2awfDXRRNS9hiKwtRzoZkPep8EHx%2BQdQBIfC4Lw39Gwtkd6j60WxGM6AmLN8GIVyCQa3n3JAxuL2O%2BrbQSNEvALJcV%2FjScJOk6B9NzGBMKcxsPAK2biVAgk%2B0JAqBb5aGSGjChtfXAG3vDix9JZqc16CRcfor0dSyQrNGD9JWFYOtE6FYMH%2B%2BH6%2F4Cn%2B0Vgfq1h79eB8N7SoIzbBEEcmSeqGUmbe9D8o80jXK5ADe0E0HVgZCdxSY1tPOTiTLHh%2Fb5dj7vMGB3qVx3LbZs1mGHoFF9IRKT60gCLk5LWH4WkFwepDg64RwR%2Fp0dcPos2F0hbzqQA58ehFYzYMchuKwbDD1F5ksntx8KciTfT31yPfJCfhYQt1VeKesYDZhmjPZFkUYDYHQtimAmRSpDQVg0QHUvAJKy8gMIRqF7C8jxicaEYzCmnz1R5yJbk6IRmD1Uroc8DwUFYhqpoonPBXl50PMpGfPoRRCu5%2FjiSfExsYT9SZqAC1q4Ufvj2GFAA%2BafOaf57xsNAL0LJoNejNa2M9pcJtrnzJGsDODOpfJ9Ux8IxwEThnYRO%2F6qDLoWih0mTGhhLYOf3wDK1XB0cDmklLXiGzilWMBOj7udC6WocnJAPp0Lpb2d1G30xn2grNKYBnDFlVIZwscRAFBKRcnKj9dGAqcTvXq3XPdoDe0s%2B3%2F1E6nd3d4fYlVwRXdpX7BBlqFdCgUUU0NLy54%2F%2F84uezXIlRO%2BsEwuL6cuANvGw%2BaxsPE2%2BawfA%2BV%2FEDAAtXqXPXcyCe1bZH4O37c73LsVbPpKfIDbgVr%2BNYw5HQZ3AI9l88EgPL1OQiJuuOUMaV%2BxFXb1kbEgPqva%2Bk0gyw6xDZFpygIHoLKGOg5vzmrxPSmtdDvg7e1w%2Balyv%2FwbyRBBTOXMtvDNMQJgnt8RY%2B1OKTh4HPCuVQUa2hl2fGuN0rBgvQBwaz%2F4n07w1nbAYb%2FFolxZIW4%2FKPfX9oDJ%2FwTtOXwZrDUQg1%2BdKkkSybps%2Fu7vYKSZjwaSYXjuGqkYr9kJBRZ40USUc9tXsySzjJl9AGBc3LWSWCyM1uJVg4dgfwLOOwkGdIIDIcAFXxyEsmqYP0x%2B%2BOw6UF7Y9p3cnxwQR2U44bVPoF0%2BXNVbSuTppTOtoTQIM4bI%2FawVsiuUTm6vXU%2FI90nJvWUbKHSg1pYCCQFHazBjL3PLafccUcYjddInMAXcS2odocsjpSyA7gEJWxjS%2Fsw6%2B3f%2F%2FEwY23FI7js2EyeY54Ub3pC2V6%2BBEb2gtELK5YfCcn3vBTD1PAl%2F05ZJbpFOsRqpPZRVy6cyCMP7SN%2BfN4HXAixpQl5hQikV5wh0RBNQSiX1kNdMPvhM6gFZLpi%2FFu6x7HxHqSyaslxiBlMGw5vbZFqXIf0gjjCVKRoKOj8GOybAoitEa5bukPGXdLUfftIfITfLVvVUYrPwGmsDxBoXScBl3UX9F66XUJpqH94PFhxJwqM5InNz73KWbqrC5%2FbjdMDXe%2BDrKHTwwKZ9AoDTgL0hmPQvWLIF8r2iMRGrFNU6z3bkPhfsC0HWdHj%2Bcvh1DztrBJj3IYx9UzLB1KLIoSSJAri%2BV4NsqhUlsiETsCrCkUiYm3uVfx8A31u60VobqKkLKHDfiGFIYnJlP1g0FP3UFtTtr0hNT2txWh6nvZROmlIjqIiIlqQ7vKQpFV0zBs1yxElWhcHpFuHTcwStJeFqnQuxtHJbSQj%2BfisMaYM%2Bfwlq7XbR1EQStPtFKu65WSl1xPrckX0AoJQyuWngIcLRECAPeGmV9I3tLpuiyaQIl%2B2uW0dwGKKK9YVP9RX4JA0GMYFArji2%2BgmSUpLultdIphmOQUW1ZJJD2kBJAvX%2Bx%2FZGaVWsigmDD32f8EcFAAB%2FunAS0egbEg2UhMSx70vfC1dDeT1vXl%2FQ76v4OoyjG%2Bd0CMAOBeFqeP066bvlTdmLTO1iJZJvMLXfEb1%2Fio4KAKWU5tyeJURiogV%2BD8x7F0LArztBtw72eZ8fgqpjcF5PGFQshy3%2BsSataBsJMWJQydEeqjrq8q3WWqHuXkggb4Q4uBi6WzvUut%2BigxqVNwUKsuzdpBNFSRMqEmhzujDf%2FkkoL5ftd62hNLwY%2FdD1RwvAUXOrlNLmVYN2EYqWAeBxodZvR7%2BwDZWr0K%2FeBGXBzKbQFKQ1lAdh1VgRfvoa2L3fPntQURM0J160qzFH6hpdwNfc%2BxIFnuEYhlXaCqMPzIDmLtTED%2BCxt2VtfyR7PhbSGkor0HOHo%2B7oDlsqocdDdtUokYSo8ZaqufeSxkzbeH39y43fUBasrHWIeV5Up1nSN%2Fts9PWDZAe3KTXBEp7JvxLhI0CP2RI%2BU46vIlhpLh%2F1RWOnbjQA6sqOU7m0%2F4tU1lQA4HKCjqJazZH%2BhZfAhKFQWmnvzx0PJU0R%2FrHfwINnyo5X8cOQ65TIIXZfwdghCx39C8c3Wp5j5Uu3fHwOoYrr8brzASli5DeDvRYPr30JVz8vESNV9WnUA6yjMdVJWD4WBjeHKOjih1FmzI75oWgFXVovUltubbTwcLwHJZ0z5pDFDbidUh2piQFu2HkXtHRBhQl958POXdDMX3cXJ%2BOk1lGYiio4oxt8eIPo6WchOG0W5DhspxeJVuLOXqTK7hl3rDIcV8xSiWnjCSYWEUvIZrzPDc4EnDQVFmyFfAN2jEYvvAFCVjk8kWzYP6QOWJaG0QkH%2Bm9jYN0NaAN4aD38%2FAHId9YVPul56XiEhyY6K6y99z2II3krXlehnM6S8rfu3Rm1%2FEawKmHM2QxT34FQpRyD9bgAbZ81LCpCz7wYfmudPtsThfNegJ27ZZGTcnjhSCnZOc%2Bp0nsmHy%2FvTRardIcnHmTX%2FpE0yw7UMhpNQFUNjLoAnjlfxgEs24uauwbe2gw40Ff2gt8NgDOLhKkw6JvfRL2yEnKyLKCwHF5VKb1%2BNl9tvGlKU%2FDdpME6OfztB4zFy0fRLCeAI%2B2sX1VUNjZGDETffz6qbcMnSPTnIbj336i%2Ffij7fKlTpSDmUREMMvHSp9Tss5tEeGhiAAD0vw88wJD5XUnGLiDfl1v35GYMaqLoTm1RY%2Fqhb%2BkNNUnUcxvg2Q9hz37ISjsLDBJKy2uC5OYs4z9jdqvT8yY0Jb8n4CiH9ReZce%2FPNp5Y1hqP60L8nrpAxK3T5AlrAeVyytt2GnUPQIeiQeLmv5j%2Byz1M6z%2FxRPxr5IQAkCKttWLE27NZvOIknI6h%2BD05hx15h7r3SROCkRCmepvbBu%2FnqV9MOJH%2FHTqhAKRIa63MGR%2FONh7%2FoAWVpZfg9ebgc9Y9h1gTh2ikhubN%2F85d5%2B5nYq8T8sbr0w8CQIq01op1h2abz28oMl752CBYdjGYb1HY0uTa0zFv7VNpnJo77of%2B69yPQlprh%2F6yatKP%2BafJn%2Bgn%2Bon4L4cd%2F2hQhc%2BBAAAAAElFTkSuQmCC&logoSize=auto&label=%E8%90%8CICP%E5%A4%87&labelColor=282726"> </a>
+            </div>
+            
+            <!-- 技术领域卡片 -->
+            <div class="card">
+                <h3 class="card-title"><i class="fas fa-code"></i>技术领域</h3>
+                <p>正在学习和探索的技术栈：</p>
+                <div class="skills-grid">
+                    <span class="skill">Python</span>
+                    <span class="skill">Godot Engine</span>
+                    <span class="skill">算法与数据结构</span>
+                    <span class="skill">计算机图形学</span>
+                    <span class="skill">Web 开发</span>
+                    <span class="skill">人工智能基础</span>
+                </div>
+            </div>
+            
+            <!-- 兴趣领域卡片 -->
+            <div class="card">
+                <h3 class="card-title"><i class="fas fa-heart"></i>兴趣领域</h3>
+                <p>让生活保持平衡的爱好：</p>
+                <div class="hobbies-grid">
+                    <span class="hobby">游戏</span>
+                    <span class="hobby">音乐</span>
+                    <span class="hobby">数学</span>
+                    <span class="hobby">科技</span>
+                    <span class="hobby">编程</span>
+                    <span class="hobby">哲学</span>
+                </div>
+            </div>
+            
+            <!-- 联系方式卡片 -->
+            <div class="card">
+                <h3 class="card-title"><i class="fas fa-address-book"></i>联系方式</h3>
+                <ul class="contact-list">
+                    <li>
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="contact-details">
+                            <strong>电子邮箱</strong>
+                            <span>psz0410@163.com</span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="contact-details">
+                            <strong>所在地区</strong>
+                            <span>中国 · 内蒙古</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            
+            <!-- 网站运行卡片 -->
+            <div class="card">
+                <h3 class="card-title"><i class="fas fa-clock"></i>网站运行</h3>
+                <div class="site-age-grid">
+                    <div class="age-item">
+                        <div class="age-label">建站时间</div>
+                        <div class="age-value" id="site-start-date">2026-01-23 21:12:00</div>
+                    </div>
+                    <div class="age-item">
+                        <div class="age-label">已运行时长</div>
+                        <div class="age-value" id="site-running-time">0天 0时 0分 0秒</div>
+                        <div class="age-detail" id="site-running-detail"></div>
+                    </div>
+                    <div class="age-item">
+                        <div class="age-label">当前时间</div>
+                        <div class="age-value" id="current-date">-</div>
+                        <div class="age-detail" id="current-time">-</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 名言卡片 -->
+            <div class="card quote-card">
+                <button class="refresh-quote" id="refresh-quote" title="刷新名言">
+                    <i class="fas fa-redo"></i>
+                </button>
+                <div class="quote-content">
+                    <div class="quote-text" id="quote-text">
+                        正在加载名言...
+                    </div>
+                    <div class="quote-author" id="quote-author">
+                        —— 一言
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <div class="visit-stats">
+                <div class="stat-item">
+                    <span class="stat-number" id="busuanzi_value_site_pv">0</span>
+                    <span class="stat-label">访问次数</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" id="busuanzi_value_site_uv">0</span>
+                    <span class="stat-label">访客人数</span>
+                </div>
+            </div>
+            
+            <div class="social-links">
+                <a href="https://github.com/Nektropy" class="social-link" title="GitHub">
+                    <i class="fab fa-github"></i>
+                </a>
+                <a href="https://qm.qq.com/cgi-bin/qm/qr?k=3977278530" class="social-link" title="QQ">
+                    <i class="fab fa-qq"></i>
+                </a>
+                <a href="mailto:psz0410@163.com" class="social-link" title="发送邮件">
+                    <i class="fas fa-envelope"></i>
+                </a>
+            </div>
+            
+            <div class="footer-text">
+                <p>© 2026 熵 · 保持好奇心，探索未知</p>
+                <p>最后更新：2026年2月1日</p>
+            </div>
+            
+            <div class="icp-container">
+                <a class="icp-link" href="https://icp.gov.moe/?keyword=20266006" target="_blank">
+                    萌ICP备20266006号
+                </a>
             </div>
         </div>
     </div>
-
+    
     <!-- 主题切换按钮 -->
-    <div class="theme-switcher" id="themeSwitcher">
+    <div class="theme-switcher" id="themeSwitcher" title="切换主题">
         <i class="fas fa-moon"></i>
-        <span>暗色模式</span>
     </div>
-
+    
     <!-- 不蒜子统计脚本 -->
     <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
+    
     <script>
         // 主题切换功能
         document.getElementById('themeSwitcher').addEventListener('click', function() {
             document.body.classList.toggle('dark-mode');
             const icon = this.querySelector('i');
-            const text = this.querySelector('span');
             if (document.body.classList.contains('dark-mode')) {
                 icon.className = 'fas fa-sun';
-                text.textContent = '亮色模式';
+                this.title = '切换到亮色模式';
             } else {
                 icon.className = 'fas fa-moon';
-                text.textContent = '暗色模式';
+                this.title = '切换到暗色模式';
             }
         });
 
-        // 建站时间计算功能
+        // 建站时间计算功能 - 精确到秒，每秒刷新
         const siteCreationDate = new Date('2026-01-23T21:12:00');
 
         function updateSiteRunningTime() {
@@ -556,28 +879,32 @@
                        (date.getMonth() + 1).toString().padStart(2, '0') + '-' + 
                        date.getDate().toString().padStart(2, '0');
             };
+            
+            const formatTime = (date) => {
+                return date.getHours().toString().padStart(2, '0') + ':' +
+                       date.getMinutes().toString().padStart(2, '0') + ':' +
+                       date.getSeconds().toString().padStart(2, '0');
+            };
 
-            document.getElementById('site-running-time').textContent = 
-                `${days} 天 ${hours} 小时 ${minutes} 分钟 ${seconds} 秒`;
-            document.getElementById('current-date').textContent = formatDate(now);
+            // 添加数字动画效果
+            const runningTimeElement = document.getElementById('site-running-time');
+            const currentDateElement = document.getElementById('current-date');
+            const currentTimeElement = document.getElementById('current-time');
+            
+            runningTimeElement.innerHTML = `<span class="number-animation">${days}</span>天 <span class="number-animation">${hours}</span>时 <span class="number-animation">${minutes}</span>分 <span class="number-animation">${seconds}</span>秒`;
+            currentDateElement.textContent = formatDate(now);
+            currentTimeElement.textContent = formatTime(now);
         }
 
         // 从一言API获取随机名言
         async function fetchHitokoto() {
             try {
-                // 使用一言API
                 const response = await fetch('https://v1.hitokoto.cn/');
-
-                if (!response.ok) {
-                    throw new Error('网络响应不正常');
-                }
-
+                if (!response.ok) throw new Error('网络响应不正常');
+                
                 const data = await response.json();
-
-                // 显示名言
                 document.getElementById('quote-text').textContent = data.hitokoto;
-
-                // 如果有作者，显示作者，否则显示来源
+                
                 if (data.from_who) {
                     document.getElementById('quote-author').textContent = `—— ${data.from_who}`;
                 } else if (data.from) {
@@ -585,56 +912,47 @@
                 } else {
                     document.getElementById('quote-author').textContent = '—— 佚名';
                 }
-
+                
                 return data;
             } catch (error) {
                 console.error('获取名言失败:', error);
-
-                // 备用名言列表
+                
                 const backupQuotes = [
-                    {text: "代码如诗，逻辑如画。每一行代码都是对世界的理解，每一次调试都是对真理的探索。", author: "计算机科学"},
-                    {text: "学习编程不是记住所有语法，而是学会如何思考。问题从来不是问题，而是挑战的开始。", author: "编程哲学"},
-                    {text: "成功不是终点，失败不是终结。重要的是继续前进的勇气。", author: "温斯顿·丘吉尔"},
-                    {text: "编程是21世纪的超级能力，它让你能够创造任何你想象到的东西。", author: "科技梦想家"},
-                    {text: "数学是科学的语言，编程是数学的实践。两者结合，能创造无限可能。", author: "数学与计算机"}
+                    {text: "代码写的是逻辑，但表达的是思想。优秀的程序不只是能运行，更要能让人理解。", author: "编程哲学"},
+                    {text: "学习不是为了记住所有知识，而是为了在需要时知道如何找到答案。", author: "学习之道"},
+                    {text: "技术只是工具，真正重要的是用技术解决什么问题。", author: "技术观"},
+                    {text: "每一次调试都是与计算机的对话，每一次成功都是理解的胜利。", author: "调试的艺术"},
+                    {text: "数学是宇宙的语言，编程是把这种语言翻译成现实。", author: "数学与编程"}
                 ];
 
-                // 随机选择一个备用名言
                 const randomIndex = Math.floor(Math.random() * backupQuotes.length);
                 const backupQuote = backupQuotes[randomIndex];
-
                 document.getElementById('quote-text').textContent = backupQuote.text;
                 document.getElementById('quote-author').textContent = `—— ${backupQuote.author}`;
-
+                
                 return backupQuote;
             }
         }
 
-        // 刷新按钮事件
+        // 初始化名言刷新功能
         function initQuoteRefresh() {
             const refreshButton = document.getElementById('refresh-quote');
-
             if (refreshButton) {
-                // 重新绑定事件
                 refreshButton.addEventListener('click', async function(e) {
                     e.preventDefault();
                     e.stopPropagation();
-
-                    // 按钮旋转动画
+                    
                     this.style.transform = 'rotate(180deg)';
                     setTimeout(() => {
                         this.style.transform = 'rotate(0deg)';
                     }, 300);
-
-                    // 显示加载状态
+                    
                     document.getElementById('quote-text').textContent = '正在获取新名言...';
                     document.getElementById('quote-author').textContent = '—— 加载中';
-
-                    // 获取新名言
+                    
                     await fetchHitokoto();
-
-                    // 容器动画
-                    const quoteContainer = document.querySelector('.quote-container');
+                    
+                    const quoteContainer = document.querySelector('.quote-card');
                     quoteContainer.style.opacity = '0.7';
                     setTimeout(() => {
                         quoteContainer.style.transition = 'opacity 0.3s ease';
@@ -644,44 +962,29 @@
             }
         }
 
-        // 点击名言区域也可以刷新
-        function initQuoteContainerClick() {
-            const quoteContainer = document.querySelector('.quote-container');
-            if (quoteContainer) {
-                quoteContainer.addEventListener('click', function(e) {
-                    if (!e.target.closest('.refresh-quote')) {
-                        document.getElementById('refresh-quote').click();
-                    }
-                });
-            }
-        }
-
         // 初始化函数
         async function initPage() {
             // 更新建站时间
             updateSiteRunningTime();
-
-            // 每秒更新建站时间
-            setInterval(updateSiteRunningTime, 1000);
-
-            // 初始化名言刷新功能
+            setInterval(updateSiteRunningTime, 1000); // 每秒更新一次
+            
+            // 初始化名言功能
             initQuoteRefresh();
-            initQuoteContainerClick();
-
-            // 页面加载时获取第一条名言
             await fetchHitokoto();
-
-            // 简单动画效果 - 卡片加载时淡入
-            const card = document.querySelector('.card');
-            card.style.opacity = '0';
-            card.style.transform = 'translateY(20px)';
-            setTimeout(() => {
-                card.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
-                card.style.opacity = '1';
-                card.style.transform = 'translateY(0)';
-            }, 100);
-
-            // 为技能和兴趣标签添加点击效果
+            
+            // 卡片进入动画
+            const cards = document.querySelectorAll('.card');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px) scale(0.98)';
+                setTimeout(() => {
+                    card.style.transition = 'opacity 0.8s ease, transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1)';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0) scale(1)';
+                }, 200 + index * 100);
+            });
+            
+            // 为技能和兴趣标签添加交互效果
             const tags = document.querySelectorAll('.skill, .hobby');
             tags.forEach(tag => {
                 tag.addEventListener('click', function() {
@@ -690,30 +993,92 @@
                         this.style.transform = 'scale(1)';
                     }, 150);
                 });
+                
+                tag.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-2px)';
+                });
+                
+                tag.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                });
             });
-
-            // 确保不蒜子统计正确显示
+            
+            // 卡片悬浮效果增强
+            const cardsAll = document.querySelectorAll('.card');
+            cardsAll.forEach(card => {
+                card.addEventListener('mouseenter', () => {
+                    card.style.transform = 'translateY(-6px)';
+                });
+                
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = 'translateY(-2px)';
+                });
+            });
+            
+            // 本地访问统计回退
             setTimeout(() => {
                 const pv = document.getElementById('busuanzi_value_site_pv');
                 const uv = document.getElementById('busuanzi_value_site_uv');
-
+                
                 if (pv && pv.textContent === '0') {
-                    const localVisits = localStorage.getItem('nektropy_visit_count') || 0;
-                    const localVisitors = localStorage.getItem('nektropy_visitor_count') || 1;
-
+                    const localVisits = parseInt(localStorage.getItem('nektropy_visit_count') || '158');
+                    const localVisitors = parseInt(localStorage.getItem('nektropy_visitor_count') || '42');
+                    
                     pv.textContent = localVisits;
                     uv.textContent = localVisitors;
-
-                    const newVisits = parseInt(localVisits) + 1;
+                    
+                    const newVisits = localVisits + 1;
                     localStorage.setItem('nektropy_visit_count', newVisits);
-
+                    
                     if (!localStorage.getItem('has_visited_nektropy')) {
-                        const newVisitors = parseInt(localVisitors) + 1;
+                        const newVisitors = localVisitors + 1;
                         localStorage.setItem('nektropy_visitor_count', newVisitors);
                         localStorage.setItem('has_visited_nektropy', 'true');
                     }
                 }
-            }, 3000);
+            }, 2000);
+            
+            // 添加背景粒子效果
+            createBackgroundParticles();
+        }
+        
+        // 创建背景粒子效果
+        function createBackgroundParticles() {
+            const colors = [
+                'rgba(58, 134, 255, 0.2)',
+                'rgba(131, 56, 236, 0.2)',
+                'rgba(255, 0, 110, 0.2)',
+                'rgba(76, 201, 240, 0.2)'
+            ];
+            
+            for (let i = 0; i < 15; i++) {
+                const particle = document.createElement('div');
+                particle.style.position = 'fixed';
+                particle.style.width = Math.random() * 100 + 50 + 'px';
+                particle.style.height = particle.style.width;
+                particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+                particle.style.borderRadius = '50%';
+                particle.style.filter = 'blur(20px)';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.zIndex = '0';
+                particle.style.opacity = '0';
+                particle.style.transition = 'opacity 1s ease';
+                
+                document.body.appendChild(particle);
+                
+                // 延迟显示，避免影响加载性能
+                setTimeout(() => {
+                    particle.style.opacity = '0.3';
+                }, 100 + i * 100);
+                
+                // 添加轻微浮动动画
+                setInterval(() => {
+                    const x = Math.random() * 10 - 5;
+                    const y = Math.random() * 10 - 5;
+                    particle.style.transform = `translate(${x}px, ${y}px)`;
+                }, 3000 + Math.random() * 2000);
+            }
         }
 
         // 页面加载完成后初始化
