@@ -1,9 +1,5 @@
 # 熵的个人名片 / Nektropy's Personal Card
 
-![GitHub last commit](https://img.shields.io/github/last-commit/Nektropy/nektropy.github.io)
-![GitHub repo size](https://img.shields.io/github/repo-size/Nektropy/nektropy.github.io)
-![Website](https://img.shields.io/website?url=https%3A%2F%2Fnektropy.github.io)
-
 🌐 **Live Website**: [https://nektropy.github.io](https://nektropy.github.io)
 
 一个现代化的个人名片网站，采用毛玻璃设计风格，展示个人信息、技能、兴趣和联系方式。
@@ -77,7 +73,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🎯 更新日志 / Changelog
 
-### v1.0.0 (2026-02-01)
+### v2.1.0 (2026-02-02)
 - 初始版本发布
 - 实现基本名片功能
 - 添加深色模式支持
