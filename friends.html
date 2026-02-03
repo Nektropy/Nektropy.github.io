@@ -41,7 +41,7 @@
         }
         
         body {
-            background-image: url('bg.jpg');
+            background-image: url('https://images.unsplash.com/photo-1519681393784-d120267933ba?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -149,12 +149,20 @@
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(5px);
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         
         .friend-avatar img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+        }
+        
+        .friend-avatar .default-avatar {
+            font-size: 2.5rem;
+            color: rgba(255, 255, 255, 0.7);
         }
         
         .friend-name {
@@ -282,7 +290,7 @@
             <!-- 示例友情链接1 -->
             <a href="https://www.iletter.top" class="friend-card" target="_blank">
                 <div class="friend-avatar">
-                    <img src="https://www.ittoolman.top/images/avatar.png" alt="iLetter">
+                    <img src="https://www.ittoolman.top/images/avatar.png">
                 </div>
                 <h3 class="friend-name">白荼日记</h3>
                 <p class="friend-desc">没有什么可以留住，除了死亡。</p>
@@ -290,18 +298,20 @@
 
             <a href="https://www.mxw2024.top/" class="friend-card" target="_blank">
                 <div class="friend-avatar">
-                    <img src="https://www.mxw2024.top/favicon.ico" alt="iLetter">
+                    <img src="https://www.mxw2024.top/favicon.ico">
                 </div>
                 <h3 class="friend-name">孟轩网的小站</h3>
                 <p class="friend-desc">一个简洁、美观、纯净、无广告的小站。</p>
             </a>
 
             <a href="http://mc.mc.foxfufu.com" class="friend-card" target="_blank">
-                <h3 class="friend-name">房管吖</h3>
+                <div class="friend-avatar">
+                    <i class="fas fa-user default-avatar"></i>
+                </div>
+                <h3 class="friend-name">房管吖吖</h3>
                 <p class="friend-desc">心中无女人，代码自然神。</p>
             </a>
-        </div>
-        
+            
         <div class="footer">
                 <h2>申请互链请附: </h2>
                 <pre><code>网站名称+网站链接+头像链接+网站描述</pre></code>
