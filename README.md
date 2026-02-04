@@ -1,7 +1,6 @@
 # 熵的个人名片 / Nektropy's Personal Card
 
-🌐 **Live Website**: [https://nektropy.github.io](https://nektropy.github.io)
-
+🌐 **Live Website**: [https://www.nekt.qzz.io/](https://www.nekt.qzz.io/ "https://www.nekt.qzz.io/")
 一个现代化的个人名片网站，采用毛玻璃设计风格，展示个人信息、技能、兴趣和联系方式。
 
 A modern personal card website with glassmorphism design, showcasing personal information, skills, interests, and contact details.
@@ -67,7 +66,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 📞 联系方式 / Contact
 
 - 📧 邮箱: psz0410@163.com
-- 🌐 网站: [https://nektropy.github.io](https://nektropy.github.io)
+- 🌐 网站: [https://www.nekt.qzz.io/](https://www.nekt.qzz.io/ "https://www.nekt.qzz.io/")
 - 💻 GitHub: [Nektropy](https://github.com/Nektropy)
 - 🐧 QQ: [点击联系](https://qm.qq.com/cgi-bin/qm/qr?k=3977278530)
 
