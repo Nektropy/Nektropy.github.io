@@ -1,363 +1,367 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>友情链接 - 熵的个人名片</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Microsoft YaHei', sans-serif;
-        }
-        
-        :root {
-            --primary-color: #3a86ff;
-            --secondary-color: #8338ec;
-            --accent-color: #ff006e;
-            --text-primary: #f8f9fa;
-            --text-secondary: #e9ecef;
-            --bg-primary: #f8f9fa;
-            --bg-secondary: #ffffff;
-            --glass-bg: rgba(255, 255, 255, 0.15);
-            --glass-border: rgba(255, 255, 255, 0.2);
-            --shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        
-        .dark-mode {
-            --primary-color: #4cc9f0;
-            --secondary-color: #4361ee;
-            --accent-color: #f72585;
-            --text-primary: #f8f9fa;
-            --text-secondary: #e9ecef;
-            --bg-primary: #121212;
-            --bg-secondary: #1e1e1e;
-            --glass-bg: rgba(30, 30, 30, 0.4);
-            --glass-border: rgba(255, 255, 255, 0.1);
-            --shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-        }
-        
-        body {
-            background-image: url('https://images.unsplash.com/photo-1519681393784-d120267933ba?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            color: var(--text-primary);
-            line-height: 1.6;
-            min-height: 100vh;
-            padding: 20px;
-            position: relative;
-            overflow-x: hidden;
-        }
-        
-        body::after {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.3);
-            z-index: -2;
-        }
-        
-        .container {
-            max-width: 1200px;
-            width: 100%;
-            margin: 0 auto;
-            position: relative;
-        }
-        
-        .header {
-            text-align: center;
-            margin-bottom: 40px;
-            position: relative;
-        }
-        
-        .header h1 {
-            font-size: 2.8rem;
-            font-weight: 800;
-            color: white;
-            margin-bottom: 8px;
-            letter-spacing: -0.5px;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-        }
-        
-        .header p {
-            color: rgba(255, 255, 255, 0.85);
-            font-size: 1.1rem;
-            font-weight: 400;
-        }
-        
-        .back-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            color: rgba(255, 255, 255, 0.9);
-            text-decoration: none;
-            margin-bottom: 20px;
-            transition: var(--transition);
-        }
-        
-        .back-link:hover {
-            color: white;
-            transform: translateX(-5px);
-        }
-        
-        /* 友情链接网格布局 */
-        .friends-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 25px;
-            margin-bottom: 40px;
-        }
-        
-        .friend-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(12px) saturate(180%);
-            -webkit-backdrop-filter: blur(12px) saturate(180%);
-            border: 1px solid var(--glass-border);
-            border-radius: 20px;
-            box-shadow: var(--shadow);
-            padding: 25px;
-            transition: var(--transition);
-            text-align: center;
-            text-decoration: none;
-            color: inherit;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 15px;
-        }
-        
-        .friend-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
-            text-decoration: none;
-            color: inherit;
-        }
-        
-        .friend-avatar {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            border: 3px solid rgba(255, 255, 255, 0.3);
-            overflow: hidden;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(5px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .friend-avatar img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        
-        .friend-avatar .default-avatar {
-            font-size: 2.5rem;
-            color: rgba(255, 255, 255, 0.7);
-        }
-        
-        .friend-name {
-            font-size: 1.3rem;
-            font-weight: 600;
-            color: white;
-            margin: 0;
-        }
-        
-        .friend-desc {
-            font-size: 0.9rem;
-            color: rgba(255, 255, 255, 0.8);
-            margin: 0;
-            line-height: 1.4;
-        }
-        
-        /* 页脚样式 */
-        .footer {
-            margin-top: 40px;
-            padding-top: 30px;
-            border-top: 1px solid rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
-        
-        .dark-mode .footer {
-            border-top-color: rgba(255, 255, 255, 0.1);
-        }
-        
-        .footer-text {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            margin-top: 20px;
-        }
-        
-        /* 主题切换按钮 */
-        .theme-switcher {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            width: 48px;
-            height: 48px;
-            background: var(--glass-bg);
-            backdrop-filter: blur(10px);
-            border: 1px solid var(--glass-border);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--primary-color);
-            cursor: pointer;
-            transition: var(--transition);
-            z-index: 1000;
-            box-shadow: var(--shadow);
-        }
-        
-        .theme-switcher:hover {
-            transform: rotate(30deg) scale(1.1);
-        }
-        
-        /* 响应式设计 */
-        @media (max-width: 768px) {
-            .container {
-                padding: 10px;
-            }
-            
-            .header h1 {
-                font-size: 2.2rem;
-            }
-            
-            .friends-grid {
-                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-                gap: 20px;
-            }
-            
-            .friend-card {
-                padding: 20px;
-            }
-            
-            .theme-switcher {
-                top: 15px;
-                right: 15px;
-                width: 42px;
-                height: 42px;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .header h1 {
-                font-size: 1.8rem;
-            }
-            
-            .friends-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .friend-avatar {
-                width: 70px;
-                height: 70px;
-            }
-            
-            .friend-name {
-                font-size: 1.2rem;
-            }
-        }
-        
-        /* 深色模式优化 */
-        .dark-mode .friend-card {
-            background: var(--glass-bg);
-        }
-    </style>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>友情链接 - 熵的个人名片</title>
+	<!-- css引用 -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+	<!-- 网页logo -->
+	<link rel="icon" href="/head.png" />
+	<!-- 51LA统计 -->
+	<script charset="UTF-8" id="LA_COLLECT" src="//sdk.51.la/js-sdk-pro.min.js"></script>
+	<script>
+		LA.init({id:"3OuXivrBfRfxJbLS",ck:"3OuXivrBfRfxJbLS",autoTrack:true,hashMode:true,screenRecord:true})
+	</script>
+	<script src="https://sdk.51.la/perf/js-sdk-perf.min.js" crossorigin="anonymous"></script>
+	<script>
+		new LingQue.Monitor().init({id:"3OuXqQiE51afOEFm",sendSuspicious:true,sendSpaPv:true});
+	</script>
+	<style>
+		* {
+		    margin: 0;
+		    padding: 0;
+		    box-sizing: border-box;
+		    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Microsoft YaHei', sans-serif;
+		}
+		
+		:root {
+		    --primary-color: #3a86ff;
+		    --secondary-color: #8338ec;
+		    --accent-color: #ff006e;
+		    --text-primary: #f8f9fa;
+		    --text-secondary: #e9ecef;
+		    --bg-primary: #f8f9fa;
+		    --bg-secondary: #ffffff;
+		    --glass-bg: rgba(255, 255, 255, 0.15);
+		    --glass-border: rgba(255, 255, 255, 0.2);
+		    --shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+		    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+		}
+		
+		.dark-mode {
+		    --primary-color: #4cc9f0;
+		    --secondary-color: #4361ee;
+		    --accent-color: #f72585;
+		    --text-primary: #f8f9fa;
+		    --text-secondary: #e9ecef;
+		    --bg-primary: #121212;
+		    --bg-secondary: #1e1e1e;
+		    --glass-bg: rgba(30, 30, 30, 0.4);
+		    --glass-border: rgba(255, 255, 255, 0.1);
+		    --shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+		}
+		
+		body {
+		    background-image: url('https://images.unsplash.com/photo-1519681393784-d120267933ba?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+		    background-size: cover;
+		    background-position: center;
+		    background-attachment: fixed;
+		    color: var(--text-primary);
+		    line-height: 1.6;
+		    min-height: 100vh;
+		    padding: 20px;
+		    position: relative;
+		    overflow-x: hidden;
+		}
+		
+		body::after {
+		    content: '';
+		    position: fixed;
+		    top: 0;
+		    left: 0;
+		    width: 100%;
+		    height: 100%;
+		    background: rgba(0, 0, 0, 0.3);
+		    z-index: -2;
+		}
+		
+		.container {
+		    max-width: 1200px;
+		    width: 100%;
+		    margin: 0 auto;
+		    position: relative;
+		}
+		
+		.header {
+		    text-align: center;
+		    margin-bottom: 40px;
+		    position: relative;
+		}
+		
+		.header h1 {
+		    font-size: 2.8rem;
+		    font-weight: 800;
+		    color: white;
+		    margin-bottom: 8px;
+		    letter-spacing: -0.5px;
+		    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+		}
+		
+		.header p {
+		    color: rgba(255, 255, 255, 0.85);
+		    font-size: 1.1rem;
+		    font-weight: 400;
+		}
+		
+		.back-link {
+		    display: inline-flex;
+		    align-items: center;
+		    gap: 8px;
+		    color: rgba(255, 255, 255, 0.9);
+		    text-decoration: none;
+		    margin-bottom: 20px;
+		    transition: var(--transition);
+		}
+		
+		.back-link:hover {
+		    color: white;
+		    transform: translateX(-5px);
+		}
+		
+		/* 友情链接网格布局 */
+		.friends-grid {
+		    display: grid;
+		    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+		    gap: 25px;
+		    margin-bottom: 40px;
+		}
+		
+		.friend-card {
+		    background: var(--glass-bg);
+		    backdrop-filter: blur(12px) saturate(180%);
+		    -webkit-backdrop-filter: blur(12px) saturate(180%);
+		    border: 1px solid var(--glass-border);
+		    border-radius: 20px;
+		    box-shadow: var(--shadow);
+		    padding: 25px;
+		    transition: var(--transition);
+		    text-align: center;
+		    text-decoration: none;
+		    color: inherit;
+		    display: flex;
+		    flex-direction: column;
+		    align-items: center;
+		    gap: 15px;
+		}
+		
+		.friend-card:hover {
+		    transform: translateY(-5px);
+		    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+		    text-decoration: none;
+		    color: inherit;
+		}
+		
+		.friend-avatar {
+		    width: 80px;
+		    height: 80px;
+		    border-radius: 50%;
+		    border: 3px solid rgba(255, 255, 255, 0.3);
+		    overflow: hidden;
+		    background: rgba(255, 255, 255, 0.1);
+		    backdrop-filter: blur(5px);
+		    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+		    display: flex;
+		    align-items: center;
+		    justify-content: center;
+		}
+		
+		.friend-avatar img {
+		    width: 100%;
+		    height: 100%;
+		    object-fit: cover;
+		}
+		
+		.friend-avatar .default-avatar {
+		    font-size: 2.5rem;
+		    color: rgba(255, 255, 255, 0.7);
+		}
+		
+		.friend-name {
+		    font-size: 1.3rem;
+		    font-weight: 600;
+		    color: white;
+		    margin: 0;
+		}
+		
+		.friend-desc {
+		    font-size: 0.9rem;
+		    color: rgba(255, 255, 255, 0.8);
+		    margin: 0;
+		    line-height: 1.4;
+		}
+		
+		/* 页脚样式 */
+		.footer {
+		    margin-top: 40px;
+		    padding-top: 30px;
+		    border-top: 1px solid rgba(0, 0, 0, 0.1);
+		    text-align: center;
+		}
+		
+		.dark-mode .footer {
+		    border-top-color: rgba(255, 255, 255, 0.1);
+		}
+		
+		.footer-text {
+		    color: var(--text-secondary);
+		    font-size: 0.9rem;
+		    margin-top: 20px;
+		}
+		
+		/* 主题切换按钮 */
+		.theme-switcher {
+		    position: fixed;
+		    top: 20px;
+		    right: 20px;
+		    width: 48px;
+		    height: 48px;
+		    background: var(--glass-bg);
+		    backdrop-filter: blur(10px);
+		    border: 1px solid var(--glass-border);
+		    border-radius: 50%;
+		    display: flex;
+		    align-items: center;
+		    justify-content: center;
+		    color: var(--primary-color);
+		    cursor: pointer;
+		    transition: var(--transition);
+		    z-index: 1000;
+		    box-shadow: var(--shadow);
+		}
+		
+		.theme-switcher:hover {
+		    transform: rotate(30deg) scale(1.1);
+		}
+		
+		/* 响应式设计 */
+		@media (max-width: 768px) {
+		    .container {
+		        padding: 10px;
+		    }
+		    
+		    .header h1 {
+		        font-size: 2.2rem;
+		    }
+		    
+		    .friends-grid {
+		        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+		        gap: 20px;
+		    }
+		    
+		    .friend-card {
+		        padding: 20px;
+		    }
+		    
+		    .theme-switcher {
+		        top: 15px;
+		        right: 15px;
+		        width: 42px;
+		        height: 42px;
+		    }
+		}
+		
+		@media (max-width: 480px) {
+		    .header h1 {
+		        font-size: 1.8rem;
+		    }
+		    
+		    .friends-grid {
+		        grid-template-columns: 1fr;
+		    }
+		    
+		    .friend-avatar {
+		        width: 70px;
+		        height: 70px;
+		    }
+		    
+		    .friend-name {
+		        font-size: 1.2rem;
+		    }
+		}
+		
+		/* 深色模式优化 */
+		.dark-mode .friend-card {
+		    background: var(--glass-bg);
+		}
+	</style>
 </head>
 <body>
-    <div class="container">
-        <a href="index.html" class="back-link">
-            <i class="fas fa-arrow-left"></i> 返回个人名片
-        </a>
-        
-        <div class="header">
-            <h1>友情链接</h1>
-            <p>志同道合的朋友们</p>
-        </div>
-        
-        <!-- 友情链接网格 -->
-        <div class="friends-grid">
-            <!-- 示例友情链接1 -->
-            <a href="https://www.iletter.top" class="friend-card" target="_blank">
-                <div class="friend-avatar">
-                    <img src="https://www.ittoolman.top/images/avatar.png">
-                </div>
-                <h3 class="friend-name">白荼日记</h3>
-                <p class="friend-desc">没有什么可以留住，除了死亡。</p>
-            </a>
-
-            <a href="https://www.mxw2024.top/" class="friend-card" target="_blank">
-                <div class="friend-avatar">
-                    <img src="https://www.mxw2024.top/favicon.ico">
-                </div>
-                <h3 class="friend-name">孟轩网的小站</h3>
-                <p class="friend-desc">一个简洁、美观、纯净、无广告的小站。</p>
-            </a>
-
-            <a href="http://mc.mc.foxfufu.com" class="friend-card" target="_blank">
-                <div class="friend-avatar">
-                    <i class="fas fa-user default-avatar"></i>
-                </div>
-                <h3 class="friend-name">房管吖吖</h3>
-                <p class="friend-desc">心中无女人，代码自然神。</p>
-            </a>
-            
-        <div class="footer">
-                <h2>申请互链请附: </h2>
-                <pre><code>网站名称+网站链接+头像链接+网站描述</pre></code>
-                <h3><br>站长网站信息:</h3>
-                <pre><code>网站名称:熵
+	<div class="container">
+		<a href="index.html" class="back-link">
+			<i class="fas fa-arrow-left"></i> 返回个人名片 </a>
+		<div class="header">
+			<h1>友情链接</h1>
+			<p>志同道合的朋友们</p>
+		</div>
+		<!-- 友情链接网格 -->
+		<div class="friends-grid">
+			<!-- 示例友情链接1 -->
+			<a href="https://www.iletter.top" class="friend-card" target="_blank">
+				<div class="friend-avatar">
+					<img src="https://www.ittoolman.top/images/avatar.png">
+				</div>
+				<h3 class="friend-name">白荼日记</h3>
+				<p class="friend-desc">没有什么可以留住，除了死亡。</p>
+			</a>
+			<a href="https://www.mxw2024.top/" class="friend-card" target="_blank">
+				<div class="friend-avatar">
+					<img src="https://www.mxw2024.top/favicon.ico">
+				</div>
+				<h3 class="friend-name">孟轩网的小站</h3>
+				<p class="friend-desc">一个简洁、美观、纯净、无广告的小站。</p>
+			</a>
+			<a href="http://mc.mc.foxfufu.com" class="friend-card" target="_blank">
+				<div class="friend-avatar">
+					<i class="fas fa-user default-avatar"></i>
+				</div>
+				<h3 class="friend-name">房管吖吖</h3>
+				<p class="friend-desc">心中无女人，代码自然神。</p>
+			</a>
+			<div class="footer">
+				<h2>申请互链请附: </h2>
+				<pre><code>网站名称+网站链接+头像链接+网站描述</pre></code>
+				<h3><br>站长网站信息:</h3>
+				<pre><code>网站名称:熵
 网站链接:https://nektropy.github.io
 头像链接:https://nektropy.github.io/head.png
 网站描述: 世界本就浑浊，罪与爱同歌</pre></code>
-            <div class="footer-text">
-                <p>© 2026 熵 · 保持好奇心，探索未知</p>
-            </div>
-        </div>
-    </div>
-    
-    <!-- 主题切换按钮 -->
-    <div class="theme-switcher" id="themeSwitcher" title="切换主题">
-        <i class="fas fa-moon"></i>
-    </div>
-    
-    <script>
-        // 主题切换功能
-        document.getElementById('themeSwitcher').addEventListener('click', function() {
-            document.body.classList.toggle('dark-mode');
-            const icon = this.querySelector('i');
-            if (document.body.classList.contains('dark-mode')) {
-                icon.className = 'fas fa-sun';
-                this.title = '切换到亮色模式';
-            } else {
-                icon.className = 'fas fa-moon';
-                this.title = '切换到暗色模式';
-            }
-        });
-
-        // 页面加载动画
-        document.addEventListener('DOMContentLoaded', function() {
-            const cards = document.querySelectorAll('.friend-card');
-            cards.forEach((card, index) => {
-                card.style.opacity = '0';
-                card.style.transform = 'translateY(20px)';
-                setTimeout(() => {
-                    card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-                    card.style.opacity = '1';
-                    card.style.transform = 'translateY(0)';
-                }, 200 + index * 100);
-            });
-        });
-    </script>
+				<div class="footer-text">
+					<p>© 2026 熵 · 保持好奇心，探索未知</p>
+				</div>
+			</div>
+		</div>
+		<!-- 主题切换按钮 -->
+		<div class="theme-switcher" id="themeSwitcher" title="切换主题">
+			<i class="fas fa-moon"></i>
+		</div>
+		<script>
+			// 主题切换功能
+			document.getElementById('themeSwitcher').addEventListener('click', function() {
+			    document.body.classList.toggle('dark-mode');
+			    const icon = this.querySelector('i');
+			    if (document.body.classList.contains('dark-mode')) {
+			        icon.className = 'fas fa-sun';
+			        this.title = '切换到亮色模式';
+			    } else {
+			        icon.className = 'fas fa-moon';
+			        this.title = '切换到暗色模式';
+			    }
+			});
+			
+			// 页面加载动画
+			document.addEventListener('DOMContentLoaded', function() {
+			    const cards = document.querySelectorAll('.friend-card');
+			    cards.forEach((card, index) => {
+			        card.style.opacity = '0';
+			        card.style.transform = 'translateY(20px)';
+			        setTimeout(() => {
+			            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+			            card.style.opacity = '1';
+			            card.style.transform = 'translateY(0)';
+			        }, 200 + index * 100);
+			    });
+			});
+		</script>
 </body>
 </html>
