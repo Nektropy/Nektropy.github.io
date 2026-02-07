@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>熵的个人名片 | 世界本就浑浊，罪与爱同歌</title>
+    <meta name="description" content="熵的小站，世界本就浑浊，罪与爱同歌">
+    <meta name="keywords" content="熵,赛博算卦,熵的小站">
+    <meta name="author" content="熵">
+    <meta name="theme-color" content="#2563eb">
+    <link rel="icon" href="/head.png">
+    
+    <!-- 预连接优化 -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://unpkg.com">
+    <link rel="preconnect" href="https://chat.mxw315.buzz">
+    <link rel="dns-prefetch" href="https://chat.mxw315.buzz">
+    
+    <!-- 样式表 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <!-- Waline CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/@waline/client@v3/dist/waline.css" />
+
+    <!-- 统计代码 -->
+    <script charset="UTF-8" id="LA_COLLECT" src="//sdk.51.la/js-sdk-pro.min.js"></script>
+    <script>LA.init({id:"3KkEpLxmzacRhipz",ck:"3KkEpLxmzacRhipz",autoTrack:true,hashMode:true,screenRecord:true})</script>
+    <script src="https://sdk.51.la/perf/js-sdk-perf.min.js" crossorigin="anonymous"></script>
+    <script>new LingQue.Monitor().init({id:"3KlOuZC0Fi3bgsEF",sendSuspicious:true,sendSpaPv:true});</script>
+    <script charset="UTF-8" id="LA_COLLECT_2" src="//sdk.51.la/js-sdk-pro.min.js"></script>
+    <script>LA.init({id:"3OuXivrBfRfxJbLS",ck:"3OuXivrBfRfxJbLS",autoTrack:true,hashMode:true,screenRecord:true})</script>
+    <script src="https://sdk.51.la/perf/js-sdk-perf.min.js" crossorigin="anonymous"></script>
+    <script>new LingQue.Monitor().init({id:"3OuXqQiE51afOEFm",sendSuspicious:true,sendSpaPv:true});</script>
+</head>
+<body>
+    <!-- 页面加载动画 -->
+    <div class="page-loader" id="pageLoader">
+        <div class="loader-content">
+            <div class="loader-spinner"></div>
+            <p class="loader-text">正在加载...</p>
+        </div>
+    </div>
+
+    <!-- 移动端菜单 -->
+    <div class="mobile-menu">
+        <div class="menu-toggle" id="menuToggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div class="menu-dropdown" id="menuDropdown">
+            <a href="blog" class="menu-item">
+                <i class="fas fa-blog"></i>
+                <span>个人博客</span>
+            </a>
+            <a href="friends.html" class="menu-item">
+                <i class="fas fa-link"></i>
+                <span>友情链接</span>
+            </a>
+            <a href="divination.html" class="menu-item" target="_blank">
+                <i class="fas fa-yin-yang"></i>
+                <span>赛博算卦</span>
+            </a>
+        </div>
+    </div>
+    
+    <!-- 电脑端左侧固定菜单 -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-inner">
+            <div class="sidebar-header">
+                <div class="sidebar-brand">
+                    <i class="fas fa-compass"></i>
+                    <span class="brand-text">导航</span>
+                </div>
+                <button class="sidebar-toggle" id="sidebarToggle" title="收起菜单">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <a href="index.html" class="nav-link active">
+                    <div class="nav-icon"><i class="fas fa-home"></i></div>
+                    <span class="nav-text">首页</span>
+                </a>
+                <a href="blog" class="nav-link">
+                    <div class="nav-icon"><i class="fas fa-blog"></i></div>
+                    <span class="nav-text">个人博客</span>
+                </a>
+                <a href="friends.html" class="nav-link">
+                    <div class="nav-icon"><i class="fas fa-link"></i></div>
+                    <span class="nav-text">友情链接</span>
+                </a>
+                <a href="/divination.html" class="nav-link" target="_blank">
+                    <div class="nav-icon"><i class="fas fa-yin-yang"></i></div>
+                    <span class="nav-text">赛博算卦</span>
+                </a>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <div class="footer-line"></div>
+                <p class="footer-text">© 2026 熵 · 保持好奇心，探索未知</p>
+            </div>
+        </div>
+    </aside>
+    
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+    
+    <div class="theme-switcher" id="themeSwitcher" title="切换主题">
+        <i class="fas fa-moon"></i>
+    </div>
+
+    <main class="main-content">
+        <div class="container">
+            <header class="header">
+                <h1>个人名片</h1>
+                <p>简洁 · 个性</p>
+            </header>
+
+            <div class="cards-container">
+                <div class="card profile-card">
+                    <div class="profile-img">
+                        <img src="head.png" alt="头像">
+                    </div>
+                    <div class="profile-info">
+                        <h2 class="name">熵</h2>
+                        <p class="title">Nektropy</p>
+                        <div class="status">
+                            <span class="status-dot"></span>
+                            <span>地球online在线</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3 class="card-title"><i class="fas fa-user"></i>关于我</h3>
+                    <div class="about">
+                        <p>对计算机科学充满热情的高中牲一枚。喜欢在电脑和互联网上瞎折腾，喜欢探索新鲜事物，热爱科学技术和科幻小说。</p>
+                        <p>相信AI(人工智能)能够改变世界，目前正致力于学习基础数学知识和计算机领域技术，为未来的求知欲和好奇心打下基础。</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3 class="card-title"><i class="fas fa-bullseye"></i>目标愿景</h3>
+                    <div class="about">
+                        <p>1. 在学术上追求卓越，进入大学继续学习计算机科学专业</p>
+                        <p>2. 掌握多种编程语言，提升逻辑思维和创造能力</p>
+                        <p>3. 开发有意思的独立项目或游戏</p>
+                        <p>4. 培养系统化思维和解决问题的能力</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3 class="card-title"><i class="fas fa-code"></i>技术领域</h3>
+                    <p>正在学习和探索的技术栈：</p>
+                    <div class="skills-grid">
+                        <span class="skill">Python</span>
+                        <span class="skill">Godot Engine</span>
+                        <span class="skill">算法与数据结构</span>
+                        <span class="skill">计算机图形学</span>
+                        <span class="skill">Web 开发</span>
+                        <span class="skill">人工智能基础</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3 class="card-title"><i class="fas fa-heart"></i>兴趣领域</h3>
+                    <p>让生活保持平衡的爱好：</p>
+                    <div class="hobbies-grid">
+                        <span class="hobby">游戏</span>
+                        <span class="hobby">音乐</span>
+                        <span class="hobby">数学</span>
+                        <span class="hobby">科技</span>
+                        <span class="hobby">编程</span>
+                        <span class="hobby">哲学</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3 class="card-title"><i class="fas fa-address-book"></i>联系方式</h3>
+                    <ul class="contact-list">
+                        <li>
+                            <div class="contact-icon liquid-glass">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="contact-details">
+                                <strong>电子邮箱</strong>
+                                <span>psz0410@163.com</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="contact-icon liquid-glass warm">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div class="contact-details">
+                                <strong>所在地区</strong>
+                                <span>中国 · 内蒙古</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3 class="card-title"><i class="fas fa-clock"></i>网站运行</h3>
+                    <div class="site-age-grid">
+                        <div class="age-item">
+                            <div class="age-label">建站时间</div>
+                            <div class="age-value" id="site-start-date">2026-01-23 21:12:00</div>
+                        </div>
+                        <div class="age-item">
+                            <div class="age-label">已运行时长</div>
+                            <div class="age-value" id="site-running-time">计算中...</div>
+                        </div>
+                        <div class="age-item">
+                            <div class="age-label">当前时间</div>
+                            <div class="age-value" id="current-date">-</div>
+                            <div class="age-detail" id="current-time">-</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card quote-card">
+                    <button class="refresh-quote" id="refresh-quote" title="换一句">
+                        <i class="fas fa-redo"></i>
+                    </button>
+                    <div class="quote-content">
+                        <div class="quote-text" id="quote-text">加载中...</div>
+                        <div class="quote-author" id="quote-author">—— 一言</div>
+                    </div>
+                </div>
+
+                <!-- 最近留言 -->
+                <div class="card recent-comments-card" id="recentCommentsCard" style="grid-column: 1 / -1;">
+                    <h3 class="card-title">
+                        <i class="fas fa-history"></i>
+                        <span>最近留言</span>
+                    </h3>
+                    <div id="waline-recent" class="waline-recent-list">
+                        <div class="recent-loading">
+                            <div class="recent-spinner"></div>
+                            <span>加载中...</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 文章反应 -->
+                <div class="card reaction-card" id="reactionCard" style="grid-column: 1 / -1;">
+                    <h3 class="card-title">
+                        <i class="fas fa-heart"></i>
+                        <span>你觉得这篇文章怎么样？</span>
+                    </h3>
+                    <div id="waline-reaction" class="waline-reaction-container">
+                        <div class="reaction-loading">加载中...</div>
+                    </div>
+                </div>
+
+                <!-- 评论区 - 折叠 -->
+                <div class="card waline-card expanded" id="walineCard" style="grid-column: 1 / -1;">
+                    <div class="waline-header" id="walineHeader">
+                        <h3 class="card-title" style="margin: 0; border: none;">
+                            <i class="fas fa-comments"></i>
+                            <span>留言板</span>
+                            <span class="comment-count" id="commentCount" style="display: none;"></span>
+                        </h3>
+                        <div class="waline-toggle" id="walineToggle" title="收起">
+                            <i class="fas fa-chevron-up"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="waline-content" id="walineContent">
+                        <div class="waline-loading" id="walineLoading">
+                            <div class="waline-spinner"></div>
+                            <span>站点已加载，评论还在赶来的路上...</span>
+                        </div>
+                        <div id="waline"></div>
+                    </div>
+                </div>
+            </div>
+
+            <footer class="footer">
+                <div class="visit-stats">
+                    <div class="stat-item">
+                        <span class="stat-number" id="busuanzi_value_site_pv">0</span>
+                        <span class="stat-label">访问次数</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" id="busuanzi_value_site_uv">0</span>
+                        <span class="stat-label">访客人数</span>
+                    </div>
+                </div>
+                
+                <div class="social-links">
+                    <a href="https://github.com/Nektropy" class="social-link" title="GitHub">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="https://qm.qq.com/cgi-bin/qm/qr?k=3977278530" class="social-link" title="QQ">
+                        <i class="fab fa-qq"></i>
+                    </a>
+                    <a href="mailto:psz0410@163.com" class="social-link" title="发邮件">
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                </div>
+
+                <div class="cooperators" id="cooperators">
+                    <span class="coop-label">合作站点：</span>
+                    <span class="coop-list" id="coopList"></span>
+                </div>
+                
+                <div class="footer-friends">
+                    <div class="footer-friends-title">友情链接</div>
+                    <div class="footer-friends-list" id="footerFriends"></div>
+                </div>
+                
+                <div class="footer-text">
+                    <p>© 2026 熵 · 保持好奇心，探索未知</p>
+                </div>
+                <div class="icp-container">
+                    <a class="icp-link" href="https://icp.gov.moe/?keyword=20266006" target="_blank">萌ICP备20266006号</a>
+                </div>
+            </footer>
+        </div>
+    </main>
+
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <script src="config.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>

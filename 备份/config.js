@@ -1,0 +1,54 @@
+// 修改友链直接修改这里就行 - 不动HTML
+// 示例：
+//    {
+//        name: "孟轩网的小站",
+//        url: "https://www.mxw2024.top/",
+//        avatar: "https://www.mxw2024.top/favicon.ico",
+//        desc: "一个简洁、美观、纯净、无广告的小站"
+//    },
+// 注意：
+// 修改最后一个时应注意
+//         } ← 这个没有逗号
+
+// 友链配置文件
+const friendsConfig = [
+
+    {
+        name: "孟轩网的小站",
+        url: "https://www.mxw2024.top/",
+        avatar: "https://www.mxw2024.top/favicon.ico",
+        desc: "一个简洁、美观、纯净、无广告的小站"
+    },
+
+    {
+        name: "白荼日记",
+        url: "https://www.iletter.top",
+        avatar: "https://www.ittoolman.top/images/avatar.png",
+        desc: "没有什么可以留住，除了死亡。"
+    },
+
+    {
+        name: "Weiwei'sblog",
+        url: "https://www.lov3u.top",
+        avatar: "https://pic1.imgdb.cn/item/6984bbf9013471eb7b52c6f0.jpg",
+        desc: "这是我的博客网站，我会在这分享自己的生活。"
+    },
+
+    {
+        name: "SAKURAIN TEAM",
+        url: "https://sakurain.net/",
+        avatar: "https://sakurain.net/image/logo.webp",
+        desc: "一个高校大学生技术团队验证新技术的网站~"
+    }
+];
+
+// 合作配置
+const siteConfig = {
+    cooperators: [
+        {
+            name: "孟轩网的小站",
+            url: "https://www.mxw2024.top/",
+            avatar: "https://www.mxw2024.top/favicon.ico"
+        }
+    ]
+};

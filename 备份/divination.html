@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>赛博算卦 - 熵的小站</title>
+    <meta name="description" content="熵的小站，世界本就浑浊，罪与爱同歌">
+    <meta name="keywords" content="熵,赛博算卦,熵的小站,周易,六十四卦">
+    <meta name="author" content="熵">
+    <meta name="theme-color" content="#2563eb">
+    <link rel="icon" href="/head.png">
+    <!-- 统计代码 -->
+    <script charset="UTF-8" id="LA_COLLECT" src="//sdk.51.la/js-sdk-pro.min.js"></script>
+    <script>LA.init({id:"3KkEpLxmzacRhipz",ck:"3KkEpLxmzacRhipz",autoTrack:true,hashMode:true,screenRecord:true})</script>
+    <script src="https://sdk.51.la/perf/js-sdk-perf.min.js" crossorigin="anonymous"></script>
+    <script>new LingQue.Monitor().init({id:"3KlOuZC0Fi3bgsEF",sendSuspicious:true,sendSpaPv:true});</script>
+    <script charset="UTF-8" id="LA_COLLECT_2" src="//sdk.51.la/js-sdk-pro.min.js"></script>
+    <script>LA.init({id:"3OuXivrBfRfxJbLS",ck:"3OuXivrBfRfxJbLS",autoTrack:true,hashMode:true,screenRecord:true})</script>
+    <script src="https://sdk.51.la/perf/js-sdk-perf.min.js" crossorigin="anonymous"></script>
+    <script>new LingQue.Monitor().init({id:"3OuXqQiE51afOEFm",sendSuspicious:true,sendSpaPv:true});</script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* 算卦特有样式 */
+        .divination-wrapper {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .gua-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: var(--shadow);
+        }
+
+        .gua-title {
+            text-align: center;
+            font-size: 1.6rem;
+            color: #fff;
+            margin-bottom: 25px;
+        }
+
+        .gua-title i {
+            color: var(--accent);
+            margin-right: 10px;
+        }
+
+        .question-box {
+            margin-bottom: 20px;
+        }
+
+        .question-box label {
+            display: block;
+            color: var(--text-sub);
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+
+        .question-box input {
+            width: 100%;
+            padding: 14px 18px;
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+            font-size: 1rem;
+            transition: var(--trans);
+        }
+
+        .question-box input:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: rgba(255,255,255,0.15);
+        }
+
+        .question-box input::placeholder {
+            color: rgba(255,255,255,0.4);
+        }
+
+        .start-btn {
+            width: 100%;
+            padding: 16px;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: #fff;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--trans);
+        }
+
+        .start-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(58,134,255,0.4);
+        }
+
+        .start-btn:disabled {
+            opacity: 0.6;
+            cursor: wait;
+        }
+
+        .loading-box {
+            display: none;
+            text-align: center;
+            padding: 50px 20px;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(255,255,255,0.1);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .result-box {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 卦象展示区域 */
+        .gua-overview {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 20px;
+            align-items: center;
+            margin: 30px 0;
+            padding: 20px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 16px;
+        }
+
+        .gua-item {
+            text-align: center;
+            padding: 20px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 16px;
+            min-width: 120px;
+        }
+
+        .gua-char {
+            font-size: 4rem;
+            color: #fff;
+            text-shadow: 0 0 20px rgba(58,134,255,0.5);
+            margin-bottom: 10px;
+            line-height: 1;
+        }
+
+        .gua-name {
+            font-size: 1.4rem;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .gua-label {
+            font-size: 0.85rem;
+            color: var(--text-sub);
+            margin-top: 5px;
+        }
+
+        .gua-divider {
+            color: var(--primary);
+            font-size: 2rem;
+            text-align: center;
+        }
+
+        /* 完整卦名区域 */
+        .full-gua-header {
+            text-align: center;
+            margin: 25px 0;
+            padding: 20px;
+            background: linear-gradient(135deg, rgba(58,134,255,0.1), rgba(131,56,236,0.1));
+            border-radius: 16px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .full-gua-name {
+            font-size: 2.2rem;
+            color: #fff;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .full-gua-subtitle {
+            color: var(--text-sub);
+            font-size: 1rem;
+        }
+
+        /* 详细信息区域 */
+        .gua-details {
+            margin-top: 25px;
+        }
+
+        .detail-section {
+            margin-bottom: 20px;
+            padding: 20px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 12px;
+            border-left: 3px solid var(--primary);
+        }
+
+        .detail-title {
+            color: var(--primary);
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .detail-content {
+            color: var(--text-sub);
+            line-height: 1.8;
+            font-size: 0.95rem;
+        }
+
+        .detail-content.gua-ci {
+            font-size: 1.1rem;
+            color: #fff;
+            font-weight: 500;
+        }
+
+        /* 动爻区域 */
+        .yao-section {
+            margin: 25px 0;
+            padding: 20px;
+            background: rgba(255,0,110,0.1);
+            border-radius: 16px;
+            border: 1px solid rgba(255,0,110,0.2);
+        }
+
+        .yao-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .yao-title {
+            color: var(--accent);
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+
+        .yao-number {
+            background: var(--accent);
+            color: #fff;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        .yao-text {
+            color: #fff;
+            font-size: 1rem;
+            line-height: 1.8;
+            margin-bottom: 10px;
+        }
+
+        .yao-advice {
+            color: var(--text-sub);
+            font-size: 0.9rem;
+            padding: 10px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 8px;
+        }
+
+        /* 综合解读 */
+        .interpretation-section {
+            margin-top: 25px;
+            padding: 25px;
+            background: rgba(0,0,0,0.2);
+            border-radius: 16px;
+        }
+
+        .interpretation-section h4 {
+            color: var(--primary);
+            margin: 20px 0 10px 0;
+            font-size: 1.1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 8px;
+        }
+
+        .interpretation-section h4:first-child {
+            margin-top: 0;
+        }
+
+        .interpretation-section p {
+            color: var(--text-sub);
+            line-height: 1.8;
+            margin-bottom: 10px;
+        }
+
+        .interpretation-section strong {
+            color: #fff;
+        }
+
+        /* 六爻展示 */
+        .yao-list {
+            margin-top: 20px;
+        }
+
+        .yao-item {
+            display: flex;
+            gap: 15px;
+            padding: 12px;
+            margin-bottom: 8px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 8px;
+            align-items: flex-start;
+        }
+
+        .yao-item.active {
+            background: rgba(255,0,110,0.15);
+            border: 1px solid rgba(255,0,110,0.3);
+        }
+
+        .yao-index {
+            min-width: 50px;
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .yao-content {
+            flex: 1;
+            color: var(--text-sub);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .yao-item.active .yao-content {
+            color: #fff;
+        }
+
+        @media (max-width: 600px) {
+            .gua-overview {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            .gua-divider {
+                transform: rotate(90deg);
+            }
+            .gua-char {
+                font-size: 3rem;
+            }
+            .full-gua-name {
+                font-size: 1.8rem;
+            }
+            .detail-section {
+                padding: 15px;
+            }
+        }
+    </style>
+<base target="_blank">
+</head>
+<body>
+    <div class="menu-container">
+        <div class="menu-toggle" id="menuToggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div class="menu-dropdown" id="menuDropdown">
+            <a href="index.html" class="menu-item">
+                <i class="fas fa-home"></i>
+                <span>返回首页</span>
+            </a>
+            <a href="friends.html" class="menu-item">
+                <i class="fas fa-link"></i>
+                <span>友情链接</span>
+            </a>
+            <a href="https://nektropy.github.io/blog/index.html" class="menu-item">
+                <i class="fas fa-blog"></i>
+                <span>个人博客</span>
+            </a>
+        </div>
+    </div>
+
+    <div class="theme-switcher" id="themeSwitcher" title="切换主题">
+        <i class="fas fa-moon"></i>
+    </div>
+
+    <div class="container">
+        <div class="header" style="margin-bottom: 30px;">
+            <h1>赛博算卦</h1>
+            <p>基于《周易》的数字化占卜 · 六十四卦</p>
+        </div>
+
+        <div class="divination-wrapper">
+            <!-- 输入区域 -->
+            <div class="gua-card">
+                <h2 class="gua-title">
+                    <i class="fas fa-yin-yang"></i>
+                    起卦问事
+                </h2>
+                <div class="question-box">
+                    <label for="questionInput">心中默念所问之事，输入问题（可选）</label>
+                    <input type="text" id="questionInput" placeholder="例如：近期运势如何？感情发展怎样？事业发展？">
+                </div>
+                <button class="start-btn" id="startBtn">
+                    <i class="fas fa-magic"></i> 开始算卦
+                </button>
+            </div>
+
+            <!-- 加载动画 -->
+            <div class="gua-card loading-box" id="loadingBox">
+                <div class="spinner"></div>
+                <p style="color: var(--text-sub);">正在推演卦象，请静心等待...</p>
+            </div>
+
+            <!-- 结果展示 -->
+            <div class="gua-card result-box" id="resultBox">
+                <h3 style="text-align: center; color: #fff; margin-bottom: 20px;">
+                    <i class="fas fa-scroll" style="color: var(--primary);"></i> 卦象结果
+                </h3>
+
+                <!-- 卦象概览 -->
+                <div class="gua-overview">
+                    <div class="gua-item">
+                        <div class="gua-char" id="upChar">☰</div>
+                        <div class="gua-name" id="upName">乾</div>
+                        <div class="gua-label">上卦（外卦）</div>
+                    </div>
+                    <div class="gua-divider">
+                        <i class="fas fa-arrows-alt-v"></i>
+                    </div>
+                    <div class="gua-item">
+                        <div class="gua-char" id="downChar">☰</div>
+                        <div class="gua-name" id="downName">乾</div>
+                        <div class="gua-label">下卦（内卦）</div>
+                    </div>
+                </div>
+
+                <!-- 完整卦名 -->
+                <div class="full-gua-header">
+                    <div class="full-gua-name" id="fullGuaName">乾为天</div>
+                    <div class="full-gua-subtitle" id="guaSubtitle">天行健，君子以自强不息</div>
+                </div>
+
+                <!-- 卦辞象曰等详细信息 -->
+                <div class="gua-details">
+                    <div class="detail-section">
+                        <div class="detail-title">
+                            <i class="fas fa-scroll"></i> 卦辞
+                        </div>
+                        <div class="detail-content gua-ci" id="guaCi">元亨利贞。</div>
+                    </div>
+
+                    <div class="detail-section">
+                        <div class="detail-title">
+                            <i class="fas fa-mountain"></i> 象曰
+                        </div>
+                        <div class="detail-content" id="xiangYue">天行健，君子以自强不息。</div>
+                    </div>
+
+                    <div class="detail-section" id="tuanSection" style="display: none;">
+                        <div class="detail-title">
+                            <i class="fas fa-book"></i> 彖曰
+                        </div>
+                        <div class="detail-content" id="tuanYue"></div>
+                    </div>
+
+                    <div class="detail-section">
+                        <div class="detail-title">
+                            <i class="fas fa-info-circle"></i> 卦意详解
+                        </div>
+                        <div class="detail-content" id="guaDesc"></div>
+                    </div>
+                </div>
+
+                <!-- 动爻信息 -->
+                <div class="yao-section">
+                    <div class="yao-header">
+                        <div class="yao-title"><i class="fas fa-bolt"></i> 动爻</div>
+                        <div class="yao-number" id="yaoNumber">初爻</div>
+                    </div>
+                    <div class="yao-text" id="yaoText">潜龙勿用。</div>
+                    <div class="yao-advice" id="yaoAdvice">建议：时机未到，当韬光养晦。</div>
+                </div>
+
+                <!-- 六爻列表 -->
+                <div class="yao-list" id="yaoList">
+                    <!-- 动态生成 -->
+                </div>
+
+                <!-- 综合解读 -->
+                <div class="interpretation-section" id="interpretation">
+                    <!-- 动态生成 -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="divination-config.js"></script>
+    <script>
+        // 页面交互逻辑
+        const menuToggle = document.getElementById('menuToggle');
+        const menuDropdown = document.getElementById('menuDropdown');
+        const themeSwitcher = document.getElementById('themeSwitcher');
+        const startBtn = document.getElementById('startBtn');
+        const loadingBox = document.getElementById('loadingBox');
+        const resultBox = document.getElementById('resultBox');
+        const questionInput = document.getElementById('questionInput');
+
+        // 当前卦象数据
+        let currentGua = null;
+
+        // 菜单切换
+        menuToggle.addEventListener('click', () => {
+            menuToggle.classList.toggle('active');
+            menuDropdown.classList.toggle('active');
+        });
+
+        // 主题切换
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+            document.body.classList.add('dark-mode');
+            themeSwitcher.innerHTML = '<i class="fas fa-sun"></i>';
+        }
+
+        themeSwitcher.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            const isDark = document.body.classList.contains('dark-mode');
+            themeSwitcher.innerHTML = isDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        });
+
+        // 开始算卦
+        startBtn.addEventListener('click', () => {
+            const question = questionInput.value.trim();
+
+            startBtn.disabled = true;
+            loadingBox.style.display = 'block';
+            resultBox.style.display = 'none';
+
+            // 模拟推演过程
+            setTimeout(() => {
+                performDivination(question);
+                loadingBox.style.display = 'none';
+                resultBox.style.display = 'block';
+                startBtn.disabled = false;
+
+                // 滚动到结果区域
+                resultBox.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 2000);
+        });
+
+        // 执行算卦
+        function performDivination(question) {
+            // 生成随机卦象（模拟铜钱摇卦）
+            const upIndex = Math.floor(Math.random() * 8);
+            const downIndex = Math.floor(Math.random() * 8);
+            const yaoIndex = Math.floor(Math.random() * 6);
+
+            const upBagua = guaData.getBaguaByIndex(upIndex);
+            const downBagua = guaData.getBaguaByIndex(downIndex);
+
+            const guaKey = upBagua.key + downBagua.key;
+            const fullGua = guaData.getFullGua(upBagua.key, downBagua.key);
+            const yaoInfo = guaData.getYaoInterpretation(guaKey, yaoIndex);
+
+            currentGua = {
+                up: upBagua,
+                down: downBagua,
+                full: fullGua,
+                yaoIndex: yaoIndex,
+                yaoName: ['初爻', '二爻', '三爻', '四爻', '五爻', '上爻'][yaoIndex],
+                yaoInfo: yaoInfo,
+                question: question,
+                time: new Date().toLocaleString()
+            };
+
+            // 更新UI
+            document.getElementById('upChar').textContent = upBagua.char;
+            document.getElementById('upName').textContent = upBagua.name;
+            document.getElementById('downChar').textContent = downBagua.char;
+            document.getElementById('downName').textContent = downBagua.name;
+            document.getElementById('fullGuaName').textContent = fullGua.name;
+            document.getElementById('guaSubtitle').textContent = upBagua.nature + '上' + downBagua.nature + '下';
+
+            document.getElementById('guaCi').textContent = fullGua.guaCi;
+            document.getElementById('xiangYue').textContent = fullGua.xiangYue || upBagua.desc;
+            document.getElementById('guaDesc').textContent = fullGua.desc;
+
+            // 显示彖曰（如果有）
+            const tuanSection = document.getElementById('tuanSection');
+            if (fullGua.tuanYue) {
+                document.getElementById('tuanYue').textContent = fullGua.tuanYue;
+                tuanSection.style.display = 'block';
+            } else {
+                tuanSection.style.display = 'none';
+            }
+
+            // 更新动爻
+            document.getElementById('yaoNumber').textContent = currentGua.yaoName;
+            document.getElementById('yaoText').textContent = yaoInfo.text;
+            document.getElementById('yaoAdvice').textContent = '建议：' + yaoInfo.advice;
+
+            // 生成六爻列表
+            generateYaoList(fullGua.yaoCi, yaoIndex);
+
+            // 生成综合解读
+            const interpretation = guaData.getInterpretation(guaKey, yaoIndex, question);
+            document.getElementById('interpretation').innerHTML = interpretation;
+        }
+
+        // 生成六爻列表
+        function generateYaoList(yaoCiList, activeIndex) {
+            const yaoList = document.getElementById('yaoList');
+            yaoList.innerHTML = '';
+
+            const yaoNames = ['初爻', '二爻', '三爻', '四爻', '五爻', '上爻'];
+
+            yaoCiList.forEach((yao, index) => {
+                const yaoItem = document.createElement('div');
+                yaoItem.className = 'yao-item' + (index === activeIndex ? ' active' : '');
+                yaoItem.innerHTML = `
+                    <div class="yao-index">${yaoNames[index]}${index === activeIndex ? ' ⚡' : ''}</div>
+                    <div class="yao-content">${yao}</div>
+                `;
+                yaoList.appendChild(yaoItem);
+            });
+        }
+
+        // 回车键触发算卦
+        questionInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                startBtn.click();
+            }
+        });
+    </script>
+</body>
+</html>
