@@ -45,7 +45,7 @@ const friendsConfig = [
         name: "SAKURAIN TEAM",
         url: "https://sakurain.net/",
         avatar: "https://sakurain.net/image/logo.webp",
-        desc: "一个高校大学生技术团队验证新技术的网站~"
+        desc: "用代码构建未来。"
     }
 ];
 
