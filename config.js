@@ -56,7 +56,7 @@ const siteConfig = {
             name: "孟轩网的小站",
             url: "https://www.mxw2024.top/",
             avatar: "https://www.mxw2024.top/favicon.ico"
-        }
+        },
         {
             name: "孟轩科技's blog",
             url: "https://blog.mxw2024.top/",
