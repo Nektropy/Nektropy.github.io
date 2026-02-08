@@ -44,8 +44,20 @@
             });
             
             if (localStorage.getItem('sidebarCollapsed') === 'true') {
+                // 添加no-transition类禁用过渡动画
+                sidebar.classList.add('no-transition');
+                
+                // 设置初始状态
                 sidebar.classList.add('collapsed');
                 sidebarToggle.title = '展开菜单';
+                
+                // 强制重排
+                void sidebar.offsetWidth;
+                
+                // 移除no-transition类，恢复过渡动画
+                setTimeout(() => {
+                    sidebar.classList.remove('no-transition');
+                }, 100);
             }
         } else if (mobileMenu) {
             const menuToggle = document.getElementById('menuToggle');

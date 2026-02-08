@@ -30,12 +30,18 @@
 
         .gua-card {
             background: var(--glass-bg);
-            backdrop-filter: blur(12px);
+            backdrop-filter: blur(20px);
             border: 1px solid var(--glass-border);
-            border-radius: 20px;
-            padding: 30px;
-            margin-bottom: 25px;
+            border-radius: 24px;
+            padding: 32px;
+            margin-bottom: 35px;
             box-shadow: var(--shadow);
+            transition: var(--trans);
+        }
+
+        .gua-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.2);
         }
 
         .gua-title {
@@ -87,22 +93,33 @@
             padding: 16px;
             border: none;
             border-radius: 12px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            background: linear-gradient(135deg, rgba(58,134,255,0.8), rgba(131,56,236,0.8));
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
             color: #fff;
             font-size: 1.1rem;
             font-weight: 600;
             cursor: pointer;
             transition: var(--trans);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
         }
 
         .start-btn:hover:not(:disabled) {
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(58,134,255,0.4);
+            box-shadow: 0 12px 40px rgba(58,134,255,0.4);
+            border-color: rgba(255,255,255,0.3);
         }
 
         .start-btn:disabled {
             opacity: 0.6;
             cursor: wait;
+        }
+
+        .start-btn i {
+            font-size: 1.2rem;
         }
 
         .loading-box {
@@ -384,13 +401,13 @@
                 <i class="fas fa-home"></i>
                 <span>返回首页</span>
             </a>
-            <a href="friends.html" class="menu-item">
-                <i class="fas fa-link"></i>
-                <span>友情链接</span>
-            </a>
             <a href="https://nektropy.github.io/blog/index.html" class="menu-item">
                 <i class="fas fa-blog"></i>
                 <span>个人博客</span>
+            </a>
+            <a href="friends.html" class="menu-item">
+                <i class="fas fa-link"></i>
+                <span>友情链接</span>
             </a>
         </div>
     </div>
