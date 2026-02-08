@@ -257,6 +257,11 @@
     
     // 初始化 Waline
     async function initWaline() {
+        // 检查是否有Waline评论区
+        if (!document.getElementById('waline')) {
+            return;
+        }
+        
         try {
             const { init } = await import('https://unpkg.com/@waline/client@v3/dist/waline.js');
             
@@ -1075,11 +1080,13 @@
         initAnimations();
         initStats();
         
-        // 延迟加载 Waline
-        if ('requestIdleCallback' in window) {
-            requestIdleCallback(initWaline, { timeout: 2000 });
-        } else {
-            setTimeout(initWaline, 100);
+        // 延迟加载 Waline (仅在有评论区的页面)
+        if (document.getElementById('waline')) {
+            if ('requestIdleCallback' in window) {
+                requestIdleCallback(initWaline, { timeout: 2000 });
+            } else {
+                setTimeout(initWaline, 100);
+            }
         }
     });
 
