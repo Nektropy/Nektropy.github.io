@@ -42,6 +42,13 @@ const friendsConfig = [
     },
 
     {
+        name: "Inalineの小站",
+        url: "https://inaline.net",
+        avatar: "https://inaline.net/usr/themes/inaline/assets/images/logo/cover.png",
+        desc: "此情可待成追忆，只是当时已惘然。"
+    },
+
+    {
         name: "SAKURAIN TEAM",
         url: "https://sakurain.net/",
         avatar: "https://sakurain.net/image/logo.webp",
@@ -57,6 +64,7 @@ const siteConfig = {
             url: "https://www.mxw2024.top/",
             avatar: "https://www.mxw2024.top/favicon.ico"
         },
+
         {
             name: "孟轩科技's blog",
             url: "https://blog.mxw2024.top/",
