@@ -34,7 +34,7 @@ html {
 }
 
 body {
-    background: url('https://s41.ax1x.com/2026/02/05/pZIj8JO.md.jpg') center/cover fixed;
+    background: url('/img/bg.jpg') center/cover fixed;
     color: var(--text-main);
     line-height: 1.6;
     min-height: 100vh;
