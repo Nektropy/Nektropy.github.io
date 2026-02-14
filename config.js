@@ -28,6 +28,13 @@ const friendsConfig = [
     },
 
     {
+        name: "石猫博客",
+        url: "http://imshimao.com/",
+        avatar: "https://www.vidlii.net/usfi/avt/1HH5cpvb235.jpg",
+        desc: "一只石头做的猫"
+    },
+
+    {
         name: "CCWMORAN慕然科技",
         url: "https://ccwmoran.github.io",
         avatar: "https://gpo.saobby.com/i/XlQ1PmuU5UPnej02.webp",
