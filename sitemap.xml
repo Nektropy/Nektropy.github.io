@@ -6,35 +6,42 @@
   <!-- 主站页面 -->
   <url>
     <loc>https://www.nekt.qzz.io/</loc>
-    <lastmod>2026-02-06</lastmod>
+    <lastmod>2026-02-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.00</priority>
   </url>
   
   <url>
     <loc>https://www.mxw2024.top</loc>
-    <lastmod>2026-02-06</lastmod>
+    <lastmod>2026-02-15</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.99</priority>
   </url>
 
   <url>
-    <loc>https://nektropy.github.io/blog/index.html</loc>
-    <lastmod>2026-02-06</lastmod>
+    <loc>https://www.nekt.qzz.io/blog/index.html</loc>
+    <lastmod>2026-02-15</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.97</priority>
   </url>
 
   <url>
     <loc>https://www.nekt.qzz.io/friends.html</loc>
-    <lastmod>2026-02-06</lastmod>
+    <lastmod>2026-02-15</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.95</priority>
   </url>
 
   <url>
+    <loc>https://www.nekt.qzz.io/websites.html</loc>
+    <lastmod>2026-02-15</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.92</priority>
+  </url>
+
+  <url>
     <loc>https://www.nekt.qzz.io/divination.html</loc>
-    <lastmod>2026-02-06</lastmod>
+    <lastmod>2026-02-15</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.70</priority>
   </url>
